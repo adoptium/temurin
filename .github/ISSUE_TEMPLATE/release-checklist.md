@@ -90,8 +90,8 @@ Release Week Checklist:
 - [ ] Run Setup_JCK_Multinode with CLEAN_DIR=true for ( ci.role.test )
 - [ ] Disable Setup_JCK_Run_Multinode To Ensure Test Evidence Is Not Lost
 - [ ] As detailed earlier, again check the nagios server to ensure there are no critical infrastructure issues
-- [ ] Create the Github Issues for tracking progress against each Java version
-- [ ] Create the Github issues for the Adoptium public retro & TC retro
+- [ ] Create the Github Issues for tracking progress against each Java version in the adoptium/temurin repo
+- [ ] Create the Github issues for the Adoptium public retro & TC retro in the adoptium/temurin repo
 - [ ] Update the links on the slack channel for the release status and retrospective issues.
 
 #### Release Day Onwards
