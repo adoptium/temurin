@@ -128,6 +128,7 @@ Release Week Checklist:
 - [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
 - [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ )
 - [ ] **Publish the release** (run the restricted access [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins) ( also publish release notes )
+- [ ] **Consider updating the API** as required via the relevant parts of [the Adoptium API model constants](https://github.com/adoptium/api.adoptium.net/blob/main/adoptium-models-parent/adoptium-api-v3-models/src/main/kotlin/net/adoptium/api/v3/models/Versions.kt).
 - [ ] **Verify binaries published successfully** to github releases repo and website (_automate_*, this could also be an automated test)
 
 - [ ] **Publish updates to the containers to dockerhub**
