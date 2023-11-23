@@ -84,7 +84,6 @@ After 1 day, then :-
 
 Release Week Checklist:
 
-- [ ] **Add website banner** (this is done by making a PR then it gets automate published to website) - Announce that we target releases to be available within 48-72 hours of the GA tags being available
 - [ ]   -- Check All Nodes Online https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
 - [ ]  Run https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/ -- with defaults
 - [ ] Run Setup_JCK_Multinode with CLEAN_DIR=true for ( ci.role.test )
@@ -117,6 +116,10 @@ Release Week Checklist:
       - rerun(s):
 - [ ] **Check Upstream Tags, Mirror Tags & Trigger Builds For JDK8 AARCH32** This specific version is built from a separate mirror repository and has a separate build process, this is CURRENTLY not part of the automation which is handled for the other platforms and version. Also note that there is a seperate properties file (testenv_arm32.properties) which needs to be updated.
 - [ ] **Add links to the [status doc](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME)** to indicate per-platform builds ready
+- [ ] **Add website banner**
+  - [ ] Make a PR.
+  - [ ] Check it was automatically published to the website.
+  - [ ] Announce that we target releases to be available within 48-72 hours of the GA tags being available.
 - [ ] **Summarize test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
 - [ ] **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and determine blocking or non-blocking.  Supply links to triage issues or docs for each version here.
   - jdk8 triage summary:
