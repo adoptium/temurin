@@ -146,6 +146,7 @@ Release Week Checklist:
 - [ ] **Check for presence of jdk8u aarch32 GA tag and mirror it** [Mercurial repo](https://hg.openjdk.java.net/aarch32-port/jdk8u) - [Mirror job](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-hg-aarch32-jdk8u/)
 - [ ] **Do all of the above for the jdk8u/aarch32 build: Ensure to specify overridePublishName param**
 - [ ] **Archive/upload all TCK results**
-- [ ] **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup of the release artifacts
+- [ ] **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts
 - [ ] **Declare the release complete** and close this issue
 - [ ] **Re-enable testing: Once the release is deployed, don't forget to re-enable any testing that was disabled during the release process to ensure that the system is working as expected. This includes unit tests, integration tests, end-to-end tests, and any other testing that was temporarily paused. Be sure to validate that all tests are running successfully before considering the release complete.**
+- [ ] **Create a draft PR for a release blog post for next release** in the [adoptium.net](https://github.com/adoptium/adoptium.net/pulls) repository and ensure to delegate the task of finalizing and publishing the existing draft PR for this release's blog post. 
