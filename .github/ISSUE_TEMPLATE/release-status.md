@@ -62,8 +62,8 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | arm32 Linux | ⏸️       | ⏸️         | ⏸️              | ⏸️                | ⏸️            |       |
 | x64 alpine-Linux | ⏸️  | ⏸️         | ⏸️              | ⏸️                | ⏸️            | This will be a headless build |
 
-### JDK20.0.XX+Y
-| Platform  | jdk20 AQA | jdk20 TCK | jdk20 published| jdk20 installers | jdk20 images  | Notes |
+### JDK21.0.X+Y
+| Platform  | jdk21 AQA | jdk21 TCK | jdk21 published| jdk21 installers | jdk21 images  | Notes |
 | -----     | -----     | -----     | -----          | -----            | -----         | ----- |
 | **x64 Linux** | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
 | **x64 Windows** | ⏸️   | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
@@ -73,6 +73,4 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | ppcle64 Linux | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
 | s390x Linux   | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
 | ppc64 AIX | ⏸️         | ⏸️         | ⏸️              | ⛔               | ⛔            |       |
-| x32 Windows | ⏸️       | ⏸️         | ⏸️              | ⏸                | ⛔            |       |
-| arm32 Linux | ⏸️       | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
 | x64 alpine-Linux | ⏸️  | ⏸️         | ⏸️              | ⏸️                | ⏸️             | This will be a headless build |
