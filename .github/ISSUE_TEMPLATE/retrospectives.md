@@ -38,6 +38,7 @@ Retrospective Owner Tasks (in order):
   - [ ] Tick completed actions from last retrospective/s.
   - [ ] Go through the agenda.
   - [ ] Create a tickable list of actions with owner names.
+  - [ ] Create "WIP" issues including: source comment, iteration, owner.
 - [ ] Create a new retrospective issue for the next release.
 - [ ] Set a calendar reminder so you remember to do step 1 before the next release.
 - [ ] Close this issue.
