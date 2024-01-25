@@ -43,7 +43,6 @@ Retrospective Owner Tasks (in order):
 - [ ] Set a calendar reminder so you remember to do step 1 before the next release.
 - [ ] Close this issue.
 
-
 **TLDR**
 
 Add proposed agenda items as comments below.
