@@ -30,15 +30,19 @@ URL:
 Retrospective Owner Tasks (in order):
 
 - [ ] Post retro URL in \#Release around the start of the new release.
-- [ ] Copy actions from previous retrospectives into this issue, ignoring anything ticked.
-  - Include owner names.
-- [ ] Wait until most builds are released, with no clear signs of additional respins.
-- [ ] Announce the retrospective's date + time on \#Release a week before.
+- [ ] Wait until most builds are released, with no signs of a respin.
+- [ ] Announce the retrospective's date + time on \#Release a week in advance.
 - [ ] Host the retrospective:
-  - [ ] Tick completed actions from last retrospective/s.
-  - [ ] Go through the agenda.
-  - [ ] Create a tickable list of actions with owner names.
-  - [ ] Create "WIP" issues including: source comment, iteration, owner.
+  - Go through the agenda.
+  - Create a list of actions.
+- [ ] Process each action:
+  - Create a "WIP" issue including the source comment.
+  - Add the issue to the current iteration.
+  - Add an issue link to the action list.
 - [ ] Create a new retrospective issue for the next release.
 - [ ] Set a calendar reminder so you remember to do step 1 before the next release.
 - [ ] Close this issue.
+
+**TLDR**
+
+Add proposed agenda items as comments below.
