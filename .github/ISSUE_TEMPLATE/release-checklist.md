@@ -55,13 +55,6 @@ After 1 day, then :-
 
 - [ ] **Enable code freeze bot** : [Enabling code freeze](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on--main-branches-of-below-repositories)
 
-- [ ] **Disable standard builds temporarily; both nightlies and weeklies**
-  - This frees up resources and ensures no competing jobs during release week. 
-  - This should be done by running [build-pipeline-generator](https://ci.adoptium.net/job/build-scripts/job/utils/job/build-pipeline-generator/) with the default for ENABLE_PIPELINE_SCHEDULE set to false.
-- [ ] **Disable evaluation builds temporarily; both nightlies and weeklies** 
-  - This frees up resources and ensures no competing jobs during release week. 
-  - This should be done by running [evaluation-pipeline-generator](https://ci.adoptium.net/job/build-scripts/job/utils/job/evaluation-pipeline-generator/) with the default for ENABLE_PIPELINE_SCHEDULE set to false.
-
 - [ ] **Prepare For Release**
   - [ ] Ensure that there is an [aqa-tests branch](https://github.com/adoptium/aqa-tests/branches) that matches the name of the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
   - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/187d92c3030354557b2fc105cbff3e5ec631674c/pipelines/build/regeneration/release_pipeline_generator.groovy#L10C35-L10C35) with release versions.
