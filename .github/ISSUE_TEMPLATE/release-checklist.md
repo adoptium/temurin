@@ -115,6 +115,7 @@ Release Week Checklist:
   - [ ] Make a PR.
   - [ ] Check it was automatically published to the website.
   - [ ] Announce that we target releases to be available within 48-72 hours of the GA tags being available.
+- [ ] **Remind** TCK testers (via Slack comment) to update a TCK triage issue with ownership and machine IP **before** running any interactive/automanual tests.
 - [ ] **Summarize test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
 - [ ] **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and determine blocking or non-blocking.  Supply links to triage issues or docs for each version here.
   - jdk8 triage summary:
