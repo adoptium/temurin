@@ -55,8 +55,6 @@ After 1 day, then :-
 
 - [ ] **Enable code freeze bot** : [Enabling code freeze](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on--main-branches-of-below-repositories)
 
-- [ ] **Disable Nightly Testing**: Disable the nightly test runs to ensure test machines aren't being used up during release week. Create a pr to change `enableTests` to `false` [here](https://github.com/adoptium/ci-jenkins-pipelines/blob/6298b9f2be200098c06b59309093712f9ef0fe47/pipelines/defaults.json#L41) 
-
 - [ ] **Prepare For Release**
   - [ ] Ensure that there is an [aqa-tests branch](https://github.com/adoptium/aqa-tests/branches) that matches the name of the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
   - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/187d92c3030354557b2fc105cbff3e5ec631674c/pipelines/build/regeneration/release_pipeline_generator.groovy#L10C35-L10C35) with release versions.
@@ -144,5 +142,4 @@ Release Week Checklist:
 - [ ] **Archive/upload all TCK results**
 - [ ] **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts
 - [ ] **Declare the release complete** and close this issue
-- [ ] **Re-enable testing: Once the release is deployed, don't forget to re-enable any testing that was disabled during the release process to ensure that the system is working as expected. This includes unit tests, integration tests, end-to-end tests, and any other testing that was temporarily paused. Be sure to validate that all tests are running successfully before considering the release complete.**
 - [ ] **Create a draft PR for a release blog post for next release** in the [adoptium.net](https://github.com/adoptium/adoptium.net/pulls) repository and ensure to delegate the task of finalizing and publishing the existing draft PR for this release's blog post. 
