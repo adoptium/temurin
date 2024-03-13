@@ -44,7 +44,7 @@ Ensure ALL nodes online prior to running these following TC steps:
  - [ ] **Regenerate The Release Build Pipeline Jobs In Jenkins**
  - [ ] **Prepare & Perform Dry Run Of Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
  - [ ] **Triage dry-run TCK job results**
- - [ ] **Restore aqa-tests release branch textenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
+ - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
  - [ ] **Perform TCK Auto-manuals on x64Linux for each dry-run version**
 
 ### One Week Prior To Release
