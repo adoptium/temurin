@@ -74,3 +74,18 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | s390x Linux   | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
 | ppc64 AIX | ⏸️         | ⏸️         | ⏸️              | ⛔               | ⛔            |       |
 | x64 alpine-Linux | ⏸️  | ⏸️         | ⏸️              | ⏸️                | ⏸️             | This will be a headless build |
+| riscv64 Linux | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             | This will be a headless build |
+
+### JDK22.0.X+Y
+| Platform  | jdk21 AQA | jdk21 TCK | jdk21 published| jdk21 installers | jdk21 images  | Notes |
+| -----     | -----     | -----     | -----          | -----            | -----         | ----- |
+| **x64 Linux** | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
+| **x64 Windows** | ⏸️   | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
+| **x64 Mac** | ⏸️       | ⏸️         | ⏸️              | ⏸️                | ⛔            |       |
+| **aarch64 Linux** | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
+| **aarch64 Mac** | ⏸️       | ⏸️         | ⏸️              | ⏸️                | ⛔           |       |
+| ppcle64 Linux | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
+| s390x Linux   | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             |       |
+| ppc64 AIX | ⏸️         | ⏸️         | ⏸️              | ⛔               | ⛔            |       |
+| x64 alpine-Linux | ⏸️  | ⏸️         | ⏸️              | ⏸️                | ⏸️             | This will be a headless build |
+| riscv64 Linux | ⏸️     | ⏸️         | ⏸️              | ⏸️                | ⏸️             | This will be a headless build |
