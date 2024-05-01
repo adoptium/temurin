@@ -32,7 +32,7 @@ Everyone participating in a release, including the release champion are requeste
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
 - [ ] **Create build repositories release Branches** : [Create build repository release branches](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#create-release-branch-on-below-repositories)
 
-- [ ] **Identify the aqa branch name for the upcoming release**
+- [ ] **Identify the aqa branch name for the upcoming release (Note, April and October PSU updates generally use same branch as the March/September new releases**
 
 Ensure ALL nodes online prior to running these following TC steps:
  - [ ] TC: Run the DeleteJCKMultiNode process cleaning job on all ci.role.test nodes, to remove any now redundent jck-versions, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode
@@ -42,6 +42,7 @@ Ensure ALL nodes online prior to running these following TC steps:
  - [ ] **Check the nagios server to ensure there are no critical infrastructure issues**
 	 Log in to the public [nagios](https://nagios.adoptopenjdk.net/nagios/) server, and check the Problems / Services page. If you do not have access, please request it via an issue in the infrastructure repository. If there are any issues, then please log an issue in the infrastructure repository.
  - [ ] **Regenerate The Release Build Pipeline Jobs In Jenkins**
+ - [ ] **Update testenv.properties in the AQA release branch to use the  -dryrun-ga branches**  ([Sample PR](https://github.com/adoptium/aqa-tests/pull/5202/files))
  - [ ] **Prepare & Perform Dry Run Of Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
  - [ ] **Triage dry-run TCK job results**
  - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
@@ -70,21 +71,20 @@ After 1 day, then :-
 - [ ] TC: Run the Setup_JCK_Run_Multinode job with CLEAN_DIR=true (to purge any old release contents/results) on all ci.role.test nodes, this will extract the jck_run folder with all the temurin.jtx exclude files, verify all nodes successful : https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/build?delay=0sec
 - [ ] Check the nagios server to ensure there are no critical infrastructure issues
 - [ ] **Trigger a trial release pipeline dry-run** to ensure less surprises on release day (typically against a milestone build), see here for [details](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-auto-test)
-
 - [ ] Confirm successful trial release pipelines and successful jck completion
-- [ ] Calculate the "expected" openjdk build tags for the releases being published, and update all the JDKnn_BRANCH values in the testenv.properties file for the aqa-tests release branch, eg: https://github.com/adoptium/aqa-tests/blob/v0.9.6-release/testenv/testenv.properties
 
 -------
 
 Release Week Checklist:
 
-- [ ]   -- Check All Nodes Online https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
-- [ ]  Run https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/ -- with defaults
-- [ ] Run Setup_JCK_Multinode with CLEAN_DIR=true for ( ci.role.test )
+- [ ] Check All Nodes Online https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
+- [ ] Run https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/ -- with defaults
+- [ ] Run Setup_JCK_Run_Multinode with CLEAN_DIR=true for ( ci.role.test )
 - [ ] Disable Setup_JCK_Run_Multinode To Ensure Test Evidence Is Not Lost
 - [ ] As detailed earlier, again check the nagios server to ensure there are no critical infrastructure issues
-- [ ] Create the Github Issues for tracking progress against each Java version in the adoptium/temurin repo
-- [ ] Create the Github issues for the Adoptium public retro & TC retro in the adoptium/temurin repo
+- [ ] [Create the Github Issues for tracking progress](https://github.com/adoptium/temurin/issues/new?assignees=&labels=&projects=&template=release-status.md&title=%3Cmonth%3E+%3Cyear%3E+Release+Status+per+Platform%2C+Version+%26+Binary+Type) in the adoptium/temurin repo
+- [ ] Create the Github issues for the [Adoptium public retro](https://github.com/adoptium/temurin/issues/new?assignees=&labels=Retrospective&projects=&template=retrospectives.md&title=General+Retrospective+for+%3Cmonth%3E+%3Cyear%3E+Releases) in the adoptium/temurin repo
+- [ ] Create the retrospective issue for the Temurin Compliance project
 - [ ] Update the links on the slack channel for the release status and retrospective issues.
 
 #### Release Day Onwards
@@ -124,7 +124,8 @@ Release Week Checklist:
 - [ ] **Fix** blocking failures if they exist and confirm others are non-blocking.
 - [ ] **Confirm Temurin-compliance items completed**, per platform/version/binaryType
 - [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
-- [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ )
+- [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ ) and publish them with the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) using `UPSTREAM_JOB_NAME` of `create_release_notes` and the appropriate JOB NUMBER
+- [ ] **Verify that the release notes are live (as [we've had problems with this](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
 - [ ] **Publish the release** (run the restricted access [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins) ( also publish release notes )
 - [ ] **Consider updating the API** as required via the relevant parts of [the Adoptium API model constants](https://github.com/adoptium/api.adoptium.net/blob/main/adoptium-models-parent/adoptium-api-v3-models/src/main/kotlin/net/adoptium/api/v3/models/Versions.kt).
 - [ ] **Verify binaries published successfully** to github releases repo and website (_automate_*, this could also be an automated test)
@@ -142,5 +143,6 @@ Release Week Checklist:
 - [ ] **Do all of the above for the jdk8u/aarch32 build: Ensure to specify overridePublishName param**
 - [ ] **Archive/upload all TCK results**
 - [ ] **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts
-- [ ] **Declare the release complete** and close this issue
 - [ ] **Create a draft PR for a release blog post for next release** in the [adoptium.net](https://github.com/adoptium/adoptium.net/pulls) repository and ensure to delegate the task of finalizing and publishing the existing draft PR for this release's blog post. 
+- [ ] **Ensure the [adoptium calendar](https://calendar.google.com/calendar/u/0/embed?src=c_56d7263c0ceda87a1678f6144426f23fb53721480b5ff71b073afb51091e5492@group.calendar.google.com) is updated for the next cycle at a minimum**
+- [ ] **Declare the release complete** and close this issue
