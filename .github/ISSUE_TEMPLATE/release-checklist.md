@@ -23,16 +23,18 @@ Everyone participating in a release, including the release champion are requeste
 
 -------
 
-### Two Weeks Prior To Release
+### 2 Weeks Prior To Release
 
 - [ ] **Release Champion named** whose responsibility is to ensure every item in this checklist gets completed
 - [ ] **Release Checklist Created**  Create this issue to track the release and the preparation tasks.
 - [ ] **Identify Expected Release Versions** - Find out the version numbers from [here](https://www.java.com/releases/)
-
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
 - [ ] **Create build repositories release Branches** : [Create build repository release branches](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#create-release-branch-on-below-repositories)
-
 - [ ] **Identify the aqa branch name for the upcoming release (Note, April and October PSU updates generally use same branch as the March/September new releases**
+
+### 1-1½ weeks prior to release
+
+1½ weeks would typically mean running on the Friday so the dry-run results are available on the Monday before release week.
 
 Ensure ALL nodes online prior to running these following TC steps:
  - [ ] TC: Run the DeleteJCKMultiNode process cleaning job on all ci.role.test nodes, to remove any now redundent jck-versions, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode
@@ -46,9 +48,10 @@ Ensure ALL nodes online prior to running these following TC steps:
  - [ ] **Prepare & Perform Dry Run Of Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
  - [ ] **Triage dry-run TCK job results**
  - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
- - [ ] **Perform TCK Auto-manuals on x64Linux for each dry-run version**
+ - [ ] (Optional) **Perform TCK Auto-manuals on x64Linux for each dry-run version**
 
-### One Week Prior To Release
+### Thursday or Friday prior to release
+
 - [ ] **Final Code Freeze Warning** post a message to the build & release slack channels : [Slack message](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#code-freeze-message)
 
 After 1 day, then :-
@@ -66,12 +69,10 @@ After 1 day, then :-
 
 **Wait For All Of The Above To Complete Successfully Before Proceeding!**
 
-- [ ] Log a helpdesk ticket with EF , to get all test materials updated
+- [ ] Log a helpdesk ticket with EF , to get all test materials updated and prepare for any manual activities
 - [ ] TC: Run the ProcessCheckMultiNode process cleaning job on all ci.role.test nodes, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/build?delay=0sec
 - [ ] TC: Run the Setup_JCK_Run_Multinode job with CLEAN_DIR=true (to purge any old release contents/results) on all ci.role.test nodes, this will extract the jck_run folder with all the temurin.jtx exclude files, verify all nodes successful : https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/build?delay=0sec
 - [ ] Check the nagios server to ensure there are no critical infrastructure issues
-- [ ] **Trigger a trial release pipeline dry-run** to ensure less surprises on release day (typically against a milestone build), see here for [details](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-auto-test)
-- [ ] Confirm successful trial release pipelines and successful jck completion
 
 -------
 
@@ -93,17 +94,27 @@ Release Week Checklist:
 - [ ] Check the published GA tags are the "expected" tags entered in the aqa-tests release branch testenv.properties. If they are not then update.
 - [ ] **Check Tags have been Mirrored** [Mirrors](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/).
 - [ ] **Check "auto-trigger" pipelines or Launch build pipelines** for each version being released. Verify if the release pipline "auto-triggered", if not (maybe expected tag was wrong), then manually launch [(as per release doc](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#steps-for-every-version)) once release tags are available via [launch page](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/build) in Jenkins.  Provide links in this issue to each version's pipeline build(s). There may be multiple pipelines per version if primary and secondary platforms are separated to expedite the release.  In some cases,  where there are unforeseen configuration or infrastructure issues, reruns may be needed.
-  - jdk8 pipeline(s):
+  - LTS jdk8 pipeline(s):
     - **primary jdk8 pipeline:**
       - rerun(s):
     - **secondary jdk8 pipeline:**
       - reruns(s):
-  - jdk11 pipeline(s):
+  - LTS jdk11 pipeline(s):
     - **primary jdk11 pipeline:**
       - rerun(s):
     - **secondary jdk11 pipeline:**
       - rerun(s):
-  - jdkxx pipeline(s):
+  - LTS jdk17 pipeline(s):
+    - **primary jdk17 pipeline:**
+      - rerun(s):
+    - **secondary jdk17 pipeline:**
+      - rerun(s):
+  - LTS jdk21 pipeline(s):
+    - **primary jdk21 pipeline:**
+      - rerun(s):
+    - **secondary jdk21 pipeline:**
+      - rerun(s):
+  - STS jdkxx pipeline(s):
     - **primary jdkxx pipeline:**
       - rerun(s):
     - **secondary jdkxx pipeline:**
@@ -117,10 +128,11 @@ Release Week Checklist:
 - [ ] **Remind** TCK testers (via Slack comment) to update a TCK triage issue with ownership and machine IP **before** running any interactive/automanual tests.
 - [ ] **Summarize test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
 - [ ] **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and determine blocking or non-blocking.  Supply links to triage issues or docs for each version here.
-  - jdk8 triage summary:
-  - jdk11 triage summary:
-  - jdk17 triage summary:
-  - jdkXX triage summary:
+  - LTS jdk8 triage summary:
+  - LTS jdk11 triage summary:
+  - LTS jdk17 triage summary:
+  - LTS jdk21 triage summary:
+  - STS jdkXX triage summary:
 - [ ] **Fix** blocking failures if they exist and confirm others are non-blocking.
 - [ ] **Confirm Temurin-compliance items completed**, per platform/version/binaryType
 - [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
