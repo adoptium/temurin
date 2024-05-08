@@ -23,7 +23,7 @@ Everyone participating in a release, including the release champion are requeste
 
 -------
 
-### 2 Weeks Prior To Release
+### Two Weeks Prior To Release
 
 - [ ] **Release Champion named** whose responsibility is to ensure every item in this checklist gets completed
 - [ ] **Release Checklist Created**  Create this issue to track the release and the preparation tasks.
@@ -44,11 +44,11 @@ Ensure ALL nodes online prior to running these following TC steps:
  - [ ] **Check the nagios server to ensure there are no critical infrastructure issues**
 	 Log in to the public [nagios](https://nagios.adoptopenjdk.net/nagios/) server, and check the Problems / Services page. If you do not have access, please request it via an issue in the infrastructure repository. If there are any issues, then please log an issue in the infrastructure repository.
  - [ ] **Regenerate The Release Build Pipeline Jobs In Jenkins**
- - [ ] **Update testenv.properties in the AQA release branch to use the  -dryrun-ga branches**  ([Sample PR](https://github.com/adoptium/aqa-tests/pull/5202/files))
+ - [ ] **Update testenv.properties in the AQA release branch to use the -dryrun-ga branches** ([Sample PR](https://github.com/adoptium/aqa-tests/pull/5202/files))
  - [ ] **Prepare & Perform Dry Run Of Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
  - [ ] **Triage dry-run TCK job results**
  - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
- - [ ] (Optional) **Perform TCK Auto-manuals on x64Linux for each dry-run version**
+ - [ ] (Optional based on perceived risk with any machine updates) **Perform TCK Auto-manuals on one platform**
 
 ### Thursday or Friday prior to release
 
@@ -87,6 +87,7 @@ Release Week Checklist:
 - [ ] Create the Github issues for the [Adoptium public retro](https://github.com/adoptium/temurin/issues/new?assignees=&labels=Retrospective&projects=&template=retrospectives.md&title=General+Retrospective+for+%3Cmonth%3E+%3Cyear%3E+Releases) in the adoptium/temurin repo
 - [ ] Create the retrospective issue for the Temurin Compliance project
 - [ ] Update the links on the slack channel for the release status and retrospective issues.
+- [ ] Remove x32Windows from release-openjdk{8,11,17}-pipeline (they will be manually triggered later as secondary pipelines)
 
 #### Release Day Onwards
 
@@ -97,17 +98,19 @@ Release Week Checklist:
   - LTS jdk8 pipeline(s):
     - **primary jdk8 pipeline:**
       - rerun(s):
-    - **secondary jdk8 pipeline:**
+    - **secondary jdk8 pipeline (inc. Win32):**
+      - reruns(s):
+    - **aarch32-jdk8u pipeline:**
       - reruns(s):
   - LTS jdk11 pipeline(s):
     - **primary jdk11 pipeline:**
       - rerun(s):
-    - **secondary jdk11 pipeline:**
+    - **secondary jdk11 pipeline (inc. Win32):**
       - rerun(s):
   - LTS jdk17 pipeline(s):
     - **primary jdk17 pipeline:**
       - rerun(s):
-    - **secondary jdk17 pipeline:**
+    - **secondary jdk17 pipeline (inc. Win32):**
       - rerun(s):
   - LTS jdk21 pipeline(s):
     - **primary jdk21 pipeline:**
@@ -137,7 +140,7 @@ Release Week Checklist:
 - [ ] **Confirm Temurin-compliance items completed**, per platform/version/binaryType
 - [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
 - [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ ) and publish them with the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) using `UPSTREAM_JOB_NAME` of `create_release_notes` and the appropriate JOB NUMBER
-- [ ] **Verify that the release notes are live (as [we've had problems with this](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
+- [ ] **Verify that the release notes are live - may require a full update on the API [ we've had problems with this recently](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
 - [ ] **Publish the release** (run the restricted access [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins) ( also publish release notes )
 - [ ] **Consider updating the API** as required via the relevant parts of [the Adoptium API model constants](https://github.com/adoptium/api.adoptium.net/blob/main/adoptium-models-parent/adoptium-api-v3-models/src/main/kotlin/net/adoptium/api/v3/models/Versions.kt).
 - [ ] **Verify binaries published successfully** to github releases repo and website (_automate_*, this could also be an automated test)
