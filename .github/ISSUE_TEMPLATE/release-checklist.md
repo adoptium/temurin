@@ -147,7 +147,8 @@ Release Week Checklist:
 
 - [ ] **Publish updates to the containers to dockerhub**
 - [ ] **Edit the [Homebrew Temurin Cask](https://github.com/Homebrew/homebrew-cask/blob/master/Casks/temurin.rb)** and replace the version and sha256 as appropriate.  This means for Homebrew users that they install the latest by default and can use the `@` notation to install older versions if they wish.
-- [ ] **Update support page** (_automate_* github workflow to create a PR to update [support webpage](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/supported-platforms/index.adoc))
+- [ ] **Update support page** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
+- [ ] **Update supported platforms tables if needed** if they have changed in this release. Create a PR to [Supported platforms](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/supported-platforms/index.adoc)
 - [ ] **Update release notes** (_automate_* - github workflow to create update for release notes pages - [example](https://adoptium.net/temurin/release-notes/?version=jdk8u382-b05))
 - [ ] **Trigger linux installers pipeline** currently it is part of the build pipelines (will eventually be updated to run independently)
 - [ ] **Publicize the release** via Slack #release channel and Twitter (can be partially automated)
