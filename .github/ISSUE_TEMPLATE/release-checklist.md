@@ -142,7 +142,6 @@ Release Week Checklist:
 - [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ ) and publish them with the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) using `UPSTREAM_JOB_NAME` of `create_release_notes` and the appropriate JOB NUMBER
 - [ ] **Verify that the release notes are live - may require a full update on the API [ we've had problems with this recently](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
 - [ ] **Publish the release** (run the restricted access [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins) ( also publish release notes )
-- [ ] **Consider updating the API** as required via the relevant parts of [the Adoptium API model constants](https://github.com/adoptium/api.adoptium.net/blob/main/adoptium-models-parent/adoptium-api-v3-models/src/main/kotlin/net/adoptium/api/v3/models/Versions.kt).
 - [ ] **Verify binaries published successfully** to github releases repo and website (_automate_*, this could also be an automated test)
 
 - [ ] **Publish updates to the containers to dockerhub**
