@@ -78,7 +78,7 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 
 ### JDK23.0.X+Y
-| Platform  | jdk21 AQA | jdk21 TCK | jdk21 published| jdk21 installers | jdk21 images  | Notes |
+| Platform  | jdk23 AQA | jdk23 TCK | jdk23 published| jdk23 installers | jdk23 images  | Notes |
 | -----     | -----     | -----     | -----          | -----            | -----         | ----- |
 | **x64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **x64 Windows** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
