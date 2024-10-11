@@ -63,8 +63,8 @@ After 1 day, then :-
 
 - [ ] **Prepare For Release**
   - [ ] Ensure that there is an [aqa-tests branch](https://github.com/adoptium/aqa-tests/branches) that matches the name of the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
-  - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/187d92c3030354557b2fc105cbff3e5ec631674c/pipelines/build/regeneration/release_pipeline_generator.groovy#L10C35-L10C35) with release versions.
-  - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags, for more detail see [here](https://github.com/zdtsw/mirror-scripts/tree/issue/3167#skara-repos-and-processes).
+  - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/master/pipelines/build/regeneration/release_pipeline_generator.groovy#L10) with release versions.
+  - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags, for more detail see [here](https://github.com/adoptium/mirror-scripts/tree/master#skara-repos-and-processes).
   - [ ] Generate release pipeline jobs with [release-pipeline-generator](https://ci.adoptopenjdk.net/job/build-scripts/job/utils/job/release-pipeline-generator).
     - DO NOT use default job parameter values. aqaReference should be the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
 
