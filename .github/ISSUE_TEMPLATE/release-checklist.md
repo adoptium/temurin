@@ -31,7 +31,7 @@ Everyone participating in a release, including the release champion are requeste
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
 - [ ] **Create build repositories release Branches** : [Create build repository release branches](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#create-release-branch-on-below-repositories)
 - [ ] **Identify the aqa branch name for the upcoming release (Note, April and October PSU updates generally use same branch as the March/September new releases**
-- [ ] **Check that the [temurin updater action](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) has not been suspended. If it has, re-enable it or set a reminder to run manually when ready. 
+- [ ] **Check that the [temurin updater action](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) has not been suspended. If it has, re-enable it or set a reminder to run manually when ready.**
 
 ### 1-1½ weeks prior to release
 
