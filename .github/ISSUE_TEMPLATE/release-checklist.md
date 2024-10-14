@@ -31,7 +31,7 @@ Everyone participating in a release, including the release champion are requeste
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
 - [ ] **Create build repositories release Branches** : [Create build repository release branches](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#create-release-branch-on-below-repositories)
 - [ ] **Identify the aqa branch name for the upcoming release (Note, April and October PSU updates generally use same branch as the March/September new releases**
-- [ ] **Check that the [temurin updater action](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) has not been suspended. If it has, re-enable it or set a reminder to run manually when ready. 
+- [ ] **Check that the [temurin updater action](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) has not been suspended. If it has, re-enable it or set a reminder to run manually when ready.**
 
 ### 1-1½ weeks prior to release
 
@@ -63,8 +63,8 @@ After 1 day, then :-
 
 - [ ] **Prepare For Release**
   - [ ] Ensure that there is an [aqa-tests branch](https://github.com/adoptium/aqa-tests/branches) that matches the name of the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
-  - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/187d92c3030354557b2fc105cbff3e5ec631674c/pipelines/build/regeneration/release_pipeline_generator.groovy#L10C35-L10C35) with release versions.
-  - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags, for more detail see [here](https://github.com/zdtsw/mirror-scripts/tree/issue/3167#skara-repos-and-processes).
+  - [ ] Update [releaseVersions](https://github.com/adoptium/ci-jenkins-pipelines/blob/master/pipelines/build/regeneration/release_pipeline_generator.groovy#L10) with release versions.
+  - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags, for more detail see [here](https://github.com/adoptium/mirror-scripts/tree/master#skara-repos-and-processes).
   - [ ] Generate release pipeline jobs with [release-pipeline-generator](https://ci.adoptopenjdk.net/job/build-scripts/job/utils/job/release-pipeline-generator).
     - DO NOT use default job parameter values. aqaReference should be the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
 
