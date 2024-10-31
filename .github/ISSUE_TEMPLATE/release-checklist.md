@@ -37,12 +37,14 @@ Everyone participating in a release, including the release champion are requeste
 
 1½ weeks would typically mean running on the Friday so the dry-run results are available on the Monday before release week.
 
-Ensure ALL nodes online prior to running these following TC steps:
- - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions. Check the job passes.
- - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes. Check the job passes.
- - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files. Check the job passes.
- - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials. Check the job passes.
+TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
+ - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
+ - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
+ - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
+ - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files.
+ - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
 
+[AllTCKNodes]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
 [DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [ProcessCheckMultiNode]: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [Setup_JCK_Run_Multinode]: https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/parambuild/?delay=0sec&LABEL=ci.role.test&CLEAN_DIR=true
