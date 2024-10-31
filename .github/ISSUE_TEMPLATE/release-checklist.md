@@ -37,10 +37,18 @@ Everyone participating in a release, including the release champion are requeste
 
 1½ weeks would typically mean running on the Friday so the dry-run results are available on the Monday before release week.
 
-Ensure ALL nodes online prior to running these following TC steps:
- - [ ] TC: Run the DeleteJCKMultiNode process cleaning job on all ci.role.test nodes, to remove any now redundent jck-versions, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode
- - [ ] TC: Run the ProcessCheckMultiNode process cleaning job on all ci.role.test nodes, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/build?delay=0sec
- - [ ] TC: Run the Setup_JCK_Run_Multinode job with CLEAN_DIR=true (to purge any old release contents/results) on all ci.role.test nodes, this will extract the jck_run folder with all the temurin.jtx exclude files, verify all nodes successful : https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/build?delay=0sec
+TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
+ - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
+ - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
+ - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
+ - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files.
+ - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
+
+[AllTCKNodes]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
+[DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[ProcessCheckMultiNode]: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[Setup_JCK_Run_Multinode]: https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/parambuild/?delay=0sec&LABEL=ci.role.test&CLEAN_DIR=true
+[DeleteWorkspaces]: https://ci.eclipse.org/temurin-compliance/job/DeleteWorkspaces/parambuild/?LABEL=ci.role.test
 
  - [ ] **Check the nagios server to ensure there are no critical infrastructure issues**
 	 Log in to the public [nagios](https://nagios.adoptopenjdk.net/nagios/) server, and check the Problems / Services page. If you do not have access, please request it via an issue in the infrastructure repository. If there are any issues, then please log an issue in the infrastructure repository.
