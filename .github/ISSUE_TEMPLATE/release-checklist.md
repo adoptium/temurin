@@ -35,7 +35,7 @@ Everyone participating in a release, including the release champion are requeste
 
 ### 1-1½ weeks prior to release
 
-1½ weeks would typically mean running on the Friday so the dry-run results are available on the Monday before release week.
+1½ weeks would typically mean running on the Friday so the dry-run(and potential "candidate" build) results are available on the Monday before release week.
 
 TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
  - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
@@ -54,9 +54,9 @@ TC steps (please complete steps in order, and ensure jobs have finished before p
 	 Log in to the public [nagios](https://nagios.adoptopenjdk.net/nagios/) server, and check the Problems / Services page. If you do not have access, please request it via an issue in the infrastructure repository. If there are any issues, then please log an issue in the infrastructure repository.
  - [ ] **Regenerate The Release Build Pipeline Jobs In Jenkins**
  - [ ] **Update testenv.properties in the AQA release branch to use the -dryrun-ga branches** ([Sample PR](https://github.com/adoptium/aqa-tests/pull/5202/files))
- - [ ] **Prepare & Perform Dry Run Of Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
- - [ ] **Triage dry-run TCK job results**
- - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run has completed**
+ - [ ] **Prepare & Perform Dry Run/Candidate Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
+ - [ ] **Triage dry-run/candidate TCK job results**
+ - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run/candidate has completed**
  - [ ] (Optional based on perceived risk with any machine updates) **Perform TCK Auto-manuals on one platform**
 
 ### Thursday or Friday prior to release
