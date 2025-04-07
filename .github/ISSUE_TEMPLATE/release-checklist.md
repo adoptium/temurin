@@ -39,8 +39,10 @@ Everyone participating in a release, including the release champion are requeste
 
 TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
  - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
- - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
  - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
+ - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
+ - [ ] TC: Run [DeleteNonJenkinsTestFiles][DeleteNonJenkinsTestFiles] to remove any old test workspaces. Report any ERROR: to users for folder deletion..
+ - [ ] TC: Run [Gather_Host_Info][Gather_Host_Info] to check all nodes have sufficient disk space and iNodes. Resolve any space issues..
  - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files.
  - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
 
