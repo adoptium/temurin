@@ -47,8 +47,10 @@ TC steps (please complete steps in order, and ensure jobs have finished before p
  - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
 
 [AllTCKNodes]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
-[DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [ProcessCheckMultiNode]: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[DeleteNonJenkinsTestFiles]: https://ci.eclipse.org/temurin-compliance/job/DeleteNonJenkinsTestFiles/parambuild/?delay=0sec&LABEL=ci.role.test
+[Gather_Host_Info]: https://ci.eclipse.org/temurin-compliance/job/Gather_Host_Info/parambuild/?delay=0sec&LABEL=ci.role.test%26%26!sw.os.sunos
 [Setup_JCK_Run_Multinode]: https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/parambuild/?delay=0sec&LABEL=ci.role.test&CLEAN_DIR=true
 [DeleteWorkspaces]: https://ci.eclipse.org/temurin-compliance/job/DeleteWorkspaces/parambuild/?LABEL=ci.role.test
 
