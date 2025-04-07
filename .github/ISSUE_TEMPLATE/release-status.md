@@ -77,8 +77,8 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 
-### JDK23.0.X+Y
-| Platform  | jdk23 AQA | jdk23 TCK | jdk23 published| jdk23 installers | jdk23 images  | Notes |
+### JDK24.0.X+Y
+| Platform  | jdk24 AQA | jdk24 TCK | jdk24 published| jdk24 installers | jdk24 images  | Notes |
 | -----     | -----     | -----     | -----          | -----            | -----         | ----- |
 | **x64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **x64 Windows** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |

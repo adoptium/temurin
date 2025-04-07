@@ -39,14 +39,18 @@ Everyone participating in a release, including the release champion are requeste
 
 TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
  - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
- - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
  - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
+ - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
+ - [ ] TC: Run [DeleteNonJenkinsTestFiles][DeleteNonJenkinsTestFiles] to remove any old test workspaces. Report any ERROR: to users for folder deletion..
+ - [ ] TC: Run [Gather_Host_Info][Gather_Host_Info] to check all nodes have sufficient disk space and iNodes. Browse console report for any node short on space or inodes, and resolve..
  - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files.
  - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
 
 [AllTCKNodes]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
-[DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [ProcessCheckMultiNode]: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
+[DeleteNonJenkinsTestFiles]: https://ci.eclipse.org/temurin-compliance/job/DeleteNonJenkinsTestFiles/parambuild/?delay=0sec&LABEL=ci.role.test
+[Gather_Host_Info]: https://ci.eclipse.org/temurin-compliance/job/Gather_Host_Info/parambuild/?delay=0sec&LABEL=ci.role.test%26%26!sw.os.sunos
 [Setup_JCK_Run_Multinode]: https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/parambuild/?delay=0sec&LABEL=ci.role.test&CLEAN_DIR=true
 [DeleteWorkspaces]: https://ci.eclipse.org/temurin-compliance/job/DeleteWorkspaces/parambuild/?LABEL=ci.role.test
 
