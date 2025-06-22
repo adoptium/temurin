@@ -13,9 +13,9 @@ This Temurin release checklist based on the [release doc](https://github.com/ado
 
 The target release date is: _________
 
-The release champion for this release is: _________
+The release champion (RC) for this release is: _________
 
-The compliance release lead for this release is: _________
+The compliance release lead (CRL) for this release is: _________
 
 Planned absences during the release cycle:
 
@@ -28,7 +28,7 @@ Everyone participating in a release, including the release champion are requeste
 ### Two Weeks Prior To Release
 
 - [ ] **Release Champion named** whose responsibility is to ensure every item in this checklist gets completed
-- [ ] **Compliance Release Lead named** whose responsibility is to ensure every item in the compliance checklist gets completed
+- [ ] **Compliance Release Lead named** whose responsibility is to ensure Temurin Compliance items marked with TC get completed
 - [ ] **Release Checklist Created**  Create this issue to track the release and the preparation tasks.
 - [ ] **Identify Expected Release Versions** - Find out the version numbers from [here](https://www.java.com/releases/)
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
@@ -40,7 +40,7 @@ Everyone participating in a release, including the release champion are requeste
 
 1½ weeks would typically mean running on the Friday so the dry-run(and potential "candidate" build) results are available on the Monday before release week.
 
-TC steps (please complete steps in order, and ensure jobs have finished before proceeding to next step):
+CRL to ensure these TC steps are done (please complete steps in order, and ensure jobs have finished before proceeding to next step):
  - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
  - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
  - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
@@ -85,7 +85,7 @@ After 1 day, then :-
 
 **Wait For All Of The Above To Complete Successfully Before Proceeding!**
 
-- [ ] Log a helpdesk ticket with EF , to get all test materials updated and prepare for any manual activities
+- [ ] Log a helpdesk ticket with EF, to get all test materials updated and prepare for any manual activities
 - [ ] TC: Run the ProcessCheckMultiNode process cleaning job on all ci.role.test nodes, to ensure healthy state, verify all nodes successful: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/build?delay=0sec
 - [ ] TC: Run the Setup_JCK_Run_Multinode job with CLEAN_DIR=true (to purge any old release contents/results) on all ci.role.test nodes, this will extract the jck_run folder with all the temurin.jtx exclude files, verify all nodes successful : https://ci.eclipse.org/temurin-compliance/job/Setup_JCK_Run_Multinode/build?delay=0sec
 - [ ] Check the nagios server to ensure there are no critical infrastructure issues
