@@ -15,6 +15,8 @@ The target release date is: _________
 
 The release champion for this release is: _________
 
+The compliance release lead for this release is: _________
+
 Planned absences during the release cycle:
 
 The role of the release champion is to ensure that all release activities listed in this checklist get completed (by delegation to the broader team or by the release champion themselves).  The final task of the release champion during a release is to confirm that all items in the checklist were completed satisfactorily and the release can be declared complete.
@@ -26,6 +28,7 @@ Everyone participating in a release, including the release champion are requeste
 ### Two Weeks Prior To Release
 
 - [ ] **Release Champion named** whose responsibility is to ensure every item in this checklist gets completed
+- [ ] **Compliance Release Lead named** whose responsibility is to ensure every item in the compliance checklist gets completed
 - [ ] **Release Checklist Created**  Create this issue to track the release and the preparation tasks.
 - [ ] **Identify Expected Release Versions** - Find out the version numbers from [here](https://www.java.com/releases/)
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories)
