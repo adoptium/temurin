@@ -104,11 +104,12 @@ Release Week Checklist:
 - [ ] Create the retrospective issue for the Temurin Compliance project
 - [ ] Update the links on the slack channel for the release status and retrospective issues.
 - [ ] Remove x32Windows from release-openjdk{8,11,17}-pipeline (they will be manually triggered later as secondary pipelines)
+- [ ] Check for any last minute cacerts updates and cherry-pick to temurin-build release branch if needed
 
 #### Release Day Onwards
 
+
 - [ ] **Check Tags have been released upstream** - Look for mailing list announcements and `-ga` tags in version control.
-- [ ] Check the published GA tags are the "expected" tags entered in the aqa-tests release branch testenv.properties. If they are not then update.
 - [ ] **Check Tags have been Mirrored** [Mirrors](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/).
 - [ ] **Check "auto-trigger" pipelines or Launch build pipelines** for each version being released. Verify if the release pipline "auto-triggered", if not (maybe expected tag was wrong), then manually launch [(as per release doc](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#steps-for-every-version)) once release tags are available via [launch page](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/build) in Jenkins.  Provide links in this issue to each version's pipeline build(s). There may be multiple pipelines per version if primary and secondary platforms are separated to expedite the release.  In some cases,  where there are unforeseen configuration or infrastructure issues, reruns may be needed.
   - LTS jdk8 pipeline(s):
@@ -133,6 +134,11 @@ Release Week Checklist:
       - rerun(s):
     - **secondary jdk21 pipeline:**
       - rerun(s):
+  - LTS jdk25 pipeline(s):
+    - **primary jdk25 pipeline:**
+      - rerun(s):
+    - **secondary jdk25 pipeline:**
+      - rerun(s):
   - STS jdkxx pipeline(s):
     - **primary jdkxx pipeline:**
       - rerun(s):
@@ -151,21 +157,21 @@ Release Week Checklist:
   - LTS jdk11 triage summary:
   - LTS jdk17 triage summary:
   - LTS jdk21 triage summary:
+  - LTS jdk25 triage summary:
   - STS jdkXX triage summary:
 - [ ] **Fix** blocking failures if they exist and confirm others are non-blocking.
 - [ ] **Confirm Temurin-compliance items completed**, per platform/version/binaryType
 - [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
 - [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ ) and publish them with the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) using `UPSTREAM_JOB_NAME` of `create_release_notes` and the appropriate JOB NUMBER
 - [ ] **Verify that the release notes are live - may require a full update on the API [ we've had problems with this recently](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
-- [ ] **Publish the release** (run the restricted access [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins) ( also publish release notes )
-- [ ] **Verify binaries published successfully** to github releases repo and website (_automate_*, this could also be an automated test)
+- [ ] **Publish the release** by re-running the dry-runs of the [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins without the dry-run parameter
 
 - [ ] **Publish updates to the container images to dockerhub**
-- [ ] **Edit the [Homebrew Temurin Cask](https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin.rb)** and replace the version and sha256 as appropriate.  This means for Homebrew users that they install the latest by default and can use the `@` notation to install older versions if they wish.
+- [ ] **Check that the homebrew casks for macos have been automtically updated**
 - [ ] **Update support page** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
 - [ ] **Update supported platforms tables if needed** if they have changed in this release. Create a PR to [Supported platforms](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/supported-platforms/index.adoc)
 - [ ] **Update release notes** (_automate_* - github workflow to create update for release notes pages - [example](https://adoptium.net/temurin/release-notes/?version=jdk8u382-b05))
-- [ ] **Trigger linux installers pipeline** currently it is part of the build pipelines (will eventually be updated to run independently)
+- [ ] **Check the linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked
 - [ ] **Publicize the release** via Slack #release channel and Twitter (can be partially automated)
 - [ ] **Declare code freeze end** opening up the code for further development
 - [ ] **Disable code freeze bot** In order to enable the code freeze GitHub you need to change the line `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` in the [code-freeze.yml](https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21) GitHub workflow. Please contact the PMC if you need help merging this change.
