@@ -13,7 +13,7 @@ This Temurin release checklist based on the [release doc](https://github.com/ado
 
 The target release date is: _________
 
-The release champion (RC) for this release is: _________
+The release champion for this release is: _________
 
 The compliance release lead (CRL) for this release is: _________
 
@@ -22,7 +22,7 @@ Planned absences during the release cycle:
 The release champion ensures that all release tasks listed below get completed (directly or by delegation).
 Their final task is to confirm that all tasks below are completed to a high standard, and that the release can be declared complete.
 
-Everyone involved in a release (including the RC), is asked to provide feedback via the retrospective for future improvement/automation.
+Everyone involved in a release is asked to provide feedback via the retrospective for future improvement/automation.
 
 -------
 
