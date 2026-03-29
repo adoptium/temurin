@@ -1,0 +1,15 @@
+{
+  "authorized_users": [
+    "dependabot[bot]",
+    "github-actions[bot]",
+    "adamfarley",
+    "andrew-m-leonard",
+    "gdams",
+    "Haroon-Khel",
+    "sophia-guo",
+    "steelhead31",
+    "sxa",
+    "vieiro"
+  ],
+  "description": "List of GitHub usernames authorized to create release issues from templates. Add or remove usernames as needed."
+}
