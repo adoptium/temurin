@@ -22,7 +22,7 @@ on:
         required: true
         type: string
       releaseDate:
-        description: Release date passed to downstream workflows
+        description: Month and Year of the Release date passed to downstream workflows (i.e. July 2026)
         required: true
         type: string
       pipelineUrl: 
