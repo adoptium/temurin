@@ -26,7 +26,7 @@ on:
         required: true
         type: string
       pipelineUrl: 
-        description: "URL of the associated JDK version release pipeline"
+        description: "URL of the associated JDK version release pipeline, optional as it is rarely available at the time the release issues are created (i.e. https://ci.adoptium.net/job/build-scripts/job/release-openjdk26-pipeline/2/)
         required: false
         type: string
       matrixInt:
