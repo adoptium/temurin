@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "JDK version (for example: JDK8, JDK11)"
+        description: "JDK version (for example: 8 or 11)"
         required: true
         type: string
       releaseDate:
