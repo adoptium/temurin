@@ -1,5 +1,5 @@
 ---
-name: Release Status
+name: Release Status (For deployment by Release Champions only)
 about: Issue template for the status document that we direct our customers to during a release cycle
 title: <month> <year> Release Status per Platform, Version & Binary Type
 labels: ''
