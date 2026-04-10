@@ -1,5 +1,5 @@
 ---
-name: Release Checklist
+name: Release Checklist (For deployment by Release Champions only)
 about: Issue template for release champion and team to track release progress
 title: Checklist for Temurin Release <Month> <Year>
 labels: ''
