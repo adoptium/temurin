@@ -9,7 +9,8 @@
     "sophia-guo",
     "steelhead31",
     "sxa",
-    "vieiro"
+    "vieiro",
+    "smlambert"
   ],
   "description": "List of GitHub usernames authorized to create release issues from templates. Add or remove usernames as needed."
 }
