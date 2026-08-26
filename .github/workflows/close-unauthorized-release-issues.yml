@@ -29,20 +29,15 @@ jobs:
 
       - name: Check if issue is from template
         id: check-template
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           # List of template filenames to check
           TEMPLATES=("release-checklist.md" "release-status.md")
           
-          # Check if the issue body contains template markers or was created from a template
-          ISSUE_BODY=$(cat <<'EOF'
-          ${{ github.event.issue.body }}
-          EOF
-          )
-          
           IS_FROM_TEMPLATE=false
-          
           # Check if body contains template-specific content patterns
-          if echo "$ISSUE_BODY" | grep -q "checklist\|status\|retrospective"; then
+          if printf '%s' "$ISSUE_BODY" | grep -q "checklist\|status\|retrospective"; then
             IS_FROM_TEMPLATE=true
           fi
           
