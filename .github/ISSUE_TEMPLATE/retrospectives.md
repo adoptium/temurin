@@ -9,39 +9,74 @@ assignees: ''
 
 **Summary**
 
-A retrospective for all efforts surrounding the titular releases. 
+A retrospective for the release named in the title. 
 
-All community members are welcome to contribute to the agenda via comments below.
+All community members can add items to this agenda via comments.
 
-This will be a virtual meeting after the release, with at least a week of notice in the #release Slack channel.
+This will be a Zoom call, with about a week of notice in the #release Slack channel.
 
-On the day of the meeting we'll review the agenda and add a list of actions at the end.
+The host will make a checklist of actions as we go through the agenda.
 
-Invited: Everyone.
-
-**Time, Date, and URL**
-
-Time: 
-Date: 
-URL: 
+Everyone is welcome to attend.
 
 **Details**
 
-Retrospective Owner Tasks (in order):
+Time: 1:30pm UK / 8:30am Ontario
+Date: The first Wednesday of the month after the release
+URL: [Meeting link](https://eclipse.zoom.us/j/81872484707?pwd=dGl1QzcrTllWUkNWRUVGNzdYVUx4dz09)
 
-- [ ] Post retro URL in \#Release around the start of the new release.
-- [ ] Wait until most builds are released, with no signs of a respin.
-- [ ] Announce the retrospective's date + time on \#Release a week in advance.
-- [ ] Host the retrospective:
-  - Go through the agenda.
-  - Create a list of actions.
-- [ ] Process each action:
-  - Create a "WIP" issue including the source comment.
-  - Add the issue to the current iteration.
-  - Add an issue link to the action list.
+**Details**
+
+Manual Retrospective Tasks (in order):
+
+- [ ] Use the AI prompt (below) to generate a release summary, then paste it into a new comment.
+- [ ] Host the retrospective and compile a checklist of actions.
+- [ ] Complete any actions assigned to the host.
 - [ ] Create a new retrospective issue for the next release.
-- [ ] Set a calendar reminder so you remember to do step 1 before the next release.
 - [ ] Close this issue.
+
+<details>
+<summary> Note: AI Prompt (click to expand)</summary>
+
+Use this prompt verbatim with any AI assistant that can browse GitHub to generate a retrospective bullet-point summary for the most recently completed Temurin release.
+
+## The Prompt
+
+```
+Prepare a retrospective comment for the most recent Temurin release.
+
+First, identify the release month and year by searching the `adoptium/temurin` repository for the most recent issue whose title matches the pattern: `Checklist for Temurin Release [month] [year]`. Extract [month] and [year] from that title. Sanity-check the values: [month] must be a full month name (January–December) and [year] must be a 4-digit number. If either check fails, move to the next most recent matching issue and repeat until both checks pass. Use the validated [month] and [year] values throughout.
+
+Fetch the following GitHub issues plus all their comments:
+- The most recent issue in `adoptium/temurin` titled: `[month] [year] Release Status per Platform, Version & Binary Type`
+- The most recent issue in `adoptium/temurin` titled: `Checklist for Temurin Release [month] [year]`
+- Every issue in `adoptium/aqa-tests` titled: `[month] [year] Release AQAvit Activities`, including every child or linked issue referenced within them
+
+From all of that content, identify the primary positives (things that went well, met targets, or improved) and negatives (blockers, failures, delays, regressions, or repeated concerns). Favour points that are concrete, mentioned by multiple people, or actionable in a retro.
+
+Write the output as two sections — **Positives** and **Negatives** — each with 3–7 bullet points. Each bullet is one short sentence (under 20 words) ending with a markdown link to its best supporting source: `[Link](url)`. No sub-bullets, no bold text within bullets, no bullet without a source.
+```
+
+## Usage notes
+
+- Paste as-is — no substitutions needed. The AI derives the release month and year directly from the GitHub issues.
+- Works with any assistant that can browse GitHub (e.g. ChatGPT with browsing, Claude with tools, Gemini with extensions).
+- If the checklist issue title format has changed or no valid issue is found, tell the AI which month and year to use instead.
+</details>
+
+<details>
+<summary>Note: Automated tasks (click to expand)</summary>
+
+No manual actions are required for these tasks. This is just a list for future reference.
+
+- Slack reminders:
+  - Post retrospective URL in \#Release around the start of the new release.
+  - Announce the retrospective's date + time on \#Release a week in advance.
+  - Announce the start of the retrospective on #Slack.
+-  Repeating event on Google calendar. 
+  - Add meeting to the Adoptium calendar.
+
+</details>
 
 **TLDR**
 
