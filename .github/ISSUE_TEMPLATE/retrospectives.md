@@ -50,6 +50,8 @@ Fetch the following GitHub issues plus all their comments:
 - The most recent issue in `adoptium/temurin` titled: `Checklist for Temurin Release [month] [year]`
 - Every issue in `adoptium/aqa-tests` whose title starts with `[month] [year] Release AQAvit Activities`, including every child or linked issue referenced within them
 
+Fail this prompt with a useful error message if any of those issues cannot be found. Note that there must be a separate "AQAvit Activities" issue for every JDK major version mentioned in the "Release Status" issue.
+
 From all of that content, identify the primary positives (things that went well, met targets, or improved) and negatives (blockers, failures, delays, regressions, or repeated concerns). Favour points that are concrete, mentioned by multiple people, or actionable in a retro.
 
 Write the output as two sections — **Positives** and **Negatives** — each with 3–7 bullet points. Each bullet is one short sentence (under 20 words) ending with a markdown link to its best supporting source: `[Link](url)`. No sub-bullets, no bold text within bullets, no bullet without a source.
@@ -57,9 +59,9 @@ Write the output as two sections — **Positives** and **Negatives** — each wi
 
 ## Usage notes
 
-- Paste as-is — no substitutions needed. The AI derives the release month and year directly from the GitHub issues.
-- Works with any assistant that can browse GitHub (e.g. ChatGPT with browsing, Claude with tools, Gemini with extensions).
-- If the checklist issue title format has changed or no valid issue is found, tell the AI which month and year to use instead.
+- Paste as-is — no substitutions needed.
+- Works with any AI that can browse GitHub.
+- If no valid issues are found, this prompt will fail.
 </details>
 
 <details>
