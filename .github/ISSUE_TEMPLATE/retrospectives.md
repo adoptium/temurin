@@ -43,12 +43,12 @@ Use this prompt verbatim with any AI assistant that can browse GitHub to generat
 ```
 Prepare a retrospective comment for the most recent Temurin release.
 
-First, identify the release month and year by searching the `adoptium/temurin` repository for the most recent issue whose title matches the pattern: `Checklist for Temurin Release [month] [year]`. Extract [month] and [year] from that title. Sanity-check the values: [month] must be a full month name (January–December) and [year] must be a 4-digit number. If either check fails, move to the next most recent matching issue and repeat until both checks pass. Use the validated [month] and [year] values throughout.
+First, ask me for the release month and year. Do not continue until a valid month and year are supplied. Use the [month] and [year] values throughout.
 
 Fetch the following GitHub issues plus all their comments:
-- The most recent issue in `adoptium/temurin` titled: `[month] [year] Release Status per Platform, Version & Binary Type`
+- The most recent issue in `adoptium/temurin` whose title starts with `[month] [year]`, optionally followed by a JDK identifier, and ends with `Release Status per Platform, Version & Binary Type`
 - The most recent issue in `adoptium/temurin` titled: `Checklist for Temurin Release [month] [year]`
-- Every issue in `adoptium/aqa-tests` titled: `[month] [year] Release AQAvit Activities`, including every child or linked issue referenced within them
+- Every issue in `adoptium/aqa-tests` whose title starts with `[month] [year] Release AQAvit Activities`, including every child or linked issue referenced within them
 
 From all of that content, identify the primary positives (things that went well, met targets, or improved) and negatives (blockers, failures, delays, regressions, or repeated concerns). Favour points that are concrete, mentioned by multiple people, or actionable in a retro.
 
