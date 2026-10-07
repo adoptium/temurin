@@ -25,7 +25,7 @@ Time: 1:30pm UK / 8:30am Ontario
 Date: The first Wednesday of the month after the release
 URL: [Meeting link](https://eclipse.zoom.us/j/81872484707?pwd=dGl1QzcrTllWUkNWRUVGNzdYVUx4dz09)
 
-**Details**
+**Assignee Tasks**
 
 Manual Retrospective Tasks (in order):
 
