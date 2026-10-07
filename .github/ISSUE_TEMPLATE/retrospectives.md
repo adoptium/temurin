@@ -27,8 +27,6 @@ URL: [Meeting link](https://eclipse.zoom.us/j/81872484707?pwd=dGl1QzcrTllWUkNWRU
 
 **Assignee Tasks**
 
-Manual Retrospective Tasks (in order):
-
 - [ ] Use the AI prompt (below) to generate a release summary, then paste it into a new comment.
 - [ ] Host the retrospective and compile a checklist of actions.
 - [ ] Complete any actions assigned to the host.
