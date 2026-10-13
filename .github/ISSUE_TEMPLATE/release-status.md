@@ -24,8 +24,8 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | **x64 Windows**   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **x64 Mac**       | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppcle64 Linux     | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppc64 AIX         | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |       |
+| ppcle64 Linux     | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| ppc64 AIX         | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |   This will be a headless build    |
 | arm32 Linux       | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | x64 alpine-Linux  | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 
@@ -38,9 +38,9 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | **x64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **aarch64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
-| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |       |
+| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |  This will be a headless build     |
 | arm32 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 
@@ -52,9 +52,9 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | **x64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **aarch64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
-| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |       |
+| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |  This will be a headless build     |
+| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |  This will be a headless build     |
+| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |  This will be a headless build     |
 | arm32 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
@@ -67,26 +67,42 @@ Sharing information in this issue since the TCK work is being tracked in temurin
 | **x64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **aarch64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
-| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |       |
+| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |  This will be a headless build    |
+| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |  This will be a headless build     |
+| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |   This will be a headless build    |
 | aarch64 Windows | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | aarch64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 
 ### JDK25.0.X+Y
-| Platform  | jdk24 AQA | jdk24 TCK | jdk24 published | jdk24 installers | jdk24 images  | Notes |
+| Platform  | jdk25 AQA | jdk25 TCK | jdk25 published | jdk25 installers | jdk25 images  | Notes |
 | -----     | -----     | -----     | -----           | -----            | -----         | ----- |
 | **x64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **x64 Windows** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **x64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
 | **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | **aarch64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
-| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
-| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |       |
+| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |  This will be a headless build     |
 | aarch64 Windows | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
 | aarch64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
 | riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
+
+### JDK27.0.X+Y or JDK<FEATURE>+Y (UPDATE COLUMN HEADERS v)
+| Platform  | jdk27 AQA | jdk27 TCK | jdk27 published | jdk27 installers | jdk27 images  | Notes |
+| -----     | -----     | -----     | -----           | -----            | -----         | ----- |
+| **x64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
+| **x64 Windows** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
+| **aarch64 Linux** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
+| **aarch64 Mac** | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :no_entry: |       |
+| ppcle64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| s390x Linux   | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |   This will be a headless build    |
+| ppc64 AIX | :pause_button: | :pause_button: | :pause_button: | :no_entry: | :no_entry: |  This will be a headless build     |
+| aarch64 Windows | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: |       |
+| aarch64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
+| x64 alpine-Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
+| riscv64 Linux | :pause_button: | :pause_button: | :pause_button: | :pause_button: | :pause_button: | This will be a headless build |
+

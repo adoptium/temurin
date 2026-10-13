@@ -34,7 +34,7 @@ Everyone involved in a release is asked to provide feedback via the retrospectiv
 - [ ] **Identify Expected Release Versions** - Find out the version numbers from [here](https://www.java.com/releases/)
 - [ ] **Notify release branching of build repositories** : [Slack message, branching build repositories]
 - [ ] **Create build repositories release Branches** : [Create build repository release branches]
-- [ ] **Identify the aqa branch name for the upcoming release (Note, April and October PSU updates generally use same branch as the March/September new releases**
+- [ ] **Identify the aqa branch name for the upcoming release**
 - [ ] **Check that the [temurin updater action] has not been suspended. If it has, re-enable it or set a reminder to run manually when ready.**
 
 [Create build repository release branches]: https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#create-release-branch-on-below-repositories
