@@ -160,6 +160,5 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
   - [ ] Archive and publish all AQA test results.
   - [ ] CRL: Run `EclipseMirror` job in Temurin Compliance Jenkins to back up release artifacts.
 - [ ] 👤 **Prep Next Cycle:**
-  - [ ] Open notes issue in `adoptium.net` for next cycle's blog post / vulnerability advisory tracking.
-  - [ ] Verify [Adoptium Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_56d7263c0ceda87a1678f6144426f23fb53721480b5ff71b073afb51091e5492@group.calendar.google.com) is updated for the next release cycle.
+  - [ ] Open a GitHub issue in `adoptium.net` for next cycle's blog post / vulnerability advisory tracking.
 - [ ] 👤 **Declare Release Complete:** Hold retrospective review, declare release complete in `#release`, and close tracking issues.
