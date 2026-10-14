@@ -11,6 +11,14 @@ assignees: ''
 
 This release checklist coordinates all activities across the Adoptium release lifecycle, based on [RELEASING.md](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md) and the [Adoptium Release Process](https://github.com/adoptium/adoptium/wiki/Adoptium-Release-Process).
 
+### Release Types
+
+| Type | Description |
+| :--- | :--- |
+| **Feature** | A new JDK version is released. All checklist items apply. |
+| **CPU** | Quarterly Critical Patch Update. All checklist items apply. |
+| **CSPU** | Critical Security Patch Update (between CPU cycles). Items marked ⚠️ **CSPU: Optional** may be skipped at the Release Champion's discretion. |
+
 ### Release Information
 
 | Field | Value |
@@ -31,7 +39,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 * 🏗️ **JDK Production**: Source mirroring, build pipelines, binary signing, artifact generation, and publishing.
 * 🧪 **Test & Compliance**: AQA test execution & triage, Temurin Compliance (TCK), and test node maintenance.
 * 📦 **Installers**: Native OS installers (Linux packages, Windows MSI, macOS PKG & notarization, Homebrew).
-* 🐳 **Docker Images**: Official Docker Hub and Eclipse Temurin container image builds, tests, and manifest updates.
+* 🐳 **Container Images**: Official Docker Hub and Eclipse Temurin container image builds, tests, and manifest updates.
 * 📢 **Communications & Program**: Status tracking, website banners, release notes, documentation, announcements, and retrospectives.
 
 **Automation Legend:**
@@ -49,8 +57,8 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 - [ ] 👤 **Create Tracking Issues:**
   - [ ] [Create Release Status Issue](https://github.com/adoptium/temurin/issues/new?template=release-status.md) in `adoptium/temurin`.
   - [ ] [Create Public Retrospective Issue](https://github.com/adoptium/temurin/issues/new?template=retrospectives.md) in `adoptium/temurin`.
-  - [ ] CRL: Create internal retrospective issue for Temurin Compliance.
-- [ ] 👤 **Update Slack:** Post links to tracking issues in `#release` and `#build`.
+  - [ ] CRL: Create private retrospective issue for Temurin Compliance.
+- [ ] 👤 **Update Slack:** Post bookmark links to tracking issues in the `#release` channel.
 
 ### 🏗️ JDK Production
 - [ ] 👤 **Branching Notification:** Post [branching announcement](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories) to `#build` and `#release`.
@@ -60,14 +68,14 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
   - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags.
 - [ ] ⚙️ **Regenerate Release Pipelines:** Run [release-pipeline-generator](https://ci.adoptopenjdk.net/job/build-scripts/job/utils/job/release-pipeline-generator) using the release tags and latest stable `aqa-tests` release reference.
 - [ ] 🤖 **Verify Marketplace Updater:** Confirm [temurin-updater workflow](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) is active and not suspended.
-- [ ] 👤 **Final Code Freeze Warning:** Post [code freeze warning](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#code-freeze-message) to Slack 24h prior to freeze.
-- [ ] ⚙️ **Declare & Enable Code Freeze:** Announce lockdown and [enable code freeze bot](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on-the-build-repositories).
+- [ ] 👤 **Final Code Freeze Warning:** Post [code freeze warning](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#code-freeze-message) to Slack 24h prior to freeze. ⚠️ **CSPU: Optional**
+- [ ] ⚙️ **Declare & Enable Code Freeze:** Announce lockdown and [enable code freeze bot](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on-the-build-repositories). ⚠️ **CSPU: Optional**
 
 ### 🧪 Test & Compliance
 - [ ] 👤 **AQA Release Branch:** Ensure [aqa-tests release branch](https://github.com/adoptium/aqa-tests/branches) matches the latest `aqa-tests` release.
-- [ ] ⚙️ **Dry-Run Build & Tests:**
+- [ ] ⚙️ **Dry-Run Build & Tests:** ⚠️ **CSPU: Optional**
   - [ ] Set `testenv.properties` to `-dryrun-ga` branches and run dry-run builds/tests ([guide](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#dry-run-tests-do-this-at-least-1-week-before-release-in-the-same-calendar-month)).
-  - [ ] CRL: Triage dry-run TCK and AQA results.
+  - [ ] Triage dry-run TCK and AQA results.
   - [ ] Restore `testenv.properties` to `-ga` tags once dry-run completes.
 - [ ] ⚙️ **CRL Test Node Preparation:** Run maintenance on [ci.role.test nodes](https://ci.eclipse.org/temurin-compliance/label/ci.role.test/):
   - [ ] Run [ProcessCheckMultiNode](https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test) to clear lingering test processes.
@@ -82,7 +90,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 ## 2. Release Day & Execution
 
 ### 📢 Communications & Program
-- [ ] ⚙️ **Website Release Banner:** Open PR / publish release banner on adoptium.net alerting users of in-flight releases.
+- [ ] 🤖 **Website Release Banner:** Verify release banner is live on adoptium.net; manually publish if automation did not trigger it.
 - [ ] 👤 **Tester Slack Reminders:** Remind TCK and AQA testers to assign ownership/IP before running automanual/interactive tests.
 - [ ] 👤 **Track Progress:** Regularly update the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
 
@@ -144,8 +152,8 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 
 ## 3. Post-Release Wrap-up & Completion
 
-- [ ] ⚙️ **Lift Code Freeze:** Declare code freeze end in Slack and disable code freeze bot.
-- [ ] ⚙️ **Remove Website Banner:** Remove release banner on adoptium.net.
+- [ ] ⚙️ **Lift Code Freeze:** Declare code freeze end in Slack and disable code freeze bot. ⚠️ **CSPU: Optional**
+- [ ] 🤖 **Remove Website Banner:** Verify release banner has been removed from adoptium.net; manually remove if automation did not trigger it.
 - [ ] 🤖 **Run SBOM & Validation Job:** Execute [download_and_sbom_validation](https://ci.adoptium.net/job/build-scripts/job/release/job/download_and_sbom_validation) to verify downloads, signatures, and SBOM metadata.
 - [ ] 👤 **Archive Test Evidence:**
   - [ ] CRL: Archive and upload all TCK evidence.
