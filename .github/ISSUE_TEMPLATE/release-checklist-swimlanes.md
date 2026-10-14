@@ -139,7 +139,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 
 ### Release Execution Summary
 
-| Version | Release Pipeline | AQA / Triage Issue | Binaries Published | Installers Published | Docker Images Published |
+| Version | Release Pipeline | AQA / Triage Issue | Binaries Published | Installers Published | Container Images Published |
 | :--- | :--- | :--- | :---: | :---: | :---: |
 | **JDK 8 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/) | | [ ] | [ ] | [ ] |
 | **JDK 11 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk11-pipeline/) | | [ ] | [ ] | [ ] |
