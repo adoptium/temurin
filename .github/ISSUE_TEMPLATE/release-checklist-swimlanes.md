@@ -119,7 +119,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 - [ ] 🤖 **Linux Package Repositories:** Verify RPM and DEB installer jobs triggered and published by the release tool.
 - [ ] 🤖 **Homebrew Casks:** Verify macOS Homebrew cask updates are triggered/submitted.
 
-### 🐳 Docker Images
+### 🐳 Container Images
 - [ ] ⚙️ **Build Container Images:** Monitor / trigger container builds in [containers repository](https://github.com/adoptium/containers).
 - [ ] 🤖 **Container Smoke Tests:** Verify docker test runs succeed.
 - [ ] ⚙️ **Publish Images:**
