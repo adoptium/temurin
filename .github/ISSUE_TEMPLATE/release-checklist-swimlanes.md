@@ -72,6 +72,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
   - [ ] Update [releasePlan.cfg](https://github.com/adoptium/mirror-scripts/blob/master/releasePlan.cfg) with expected tags.
 - [ ] ⚙️ **Regenerate Release Pipelines:** Run [release-pipeline-generator](https://ci.adoptopenjdk.net/job/build-scripts/job/utils/job/release-pipeline-generator) using the release tags and latest stable `aqa-tests` release reference.
 - [ ] 🤖 **Verify Marketplace Updater:** Confirm [temurin-updater workflow](https://github.com/adoptium/marketplace-data/actions/workflows/temurin-updater.yml) is active and not suspended.
+- [ ] 👤 **Refresh CA Certificates Before GA:** Check for `cacerts` updates made since branching and cherry-pick required updates into the `temurin-build` release branch before GA builds trigger ([guide](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#the-week-of-the-ga-after-dry-runs-are-complete)).
 
 ### 🧪 Test & Compliance
 - [ ] 👤 **AQA Release Branch:** Ensure [aqa-tests release branch](https://github.com/adoptium/aqa-tests/branches) matches the latest `aqa-tests` release.
