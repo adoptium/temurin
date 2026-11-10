@@ -90,21 +90,8 @@ Activities are categorized by the release swimlanes and tagged with automation l
   - [ ] Execute and triage TCK test suites across all platforms/versions/binary types.
   - [ ] Coordinate execution of required interactive / automanual tests.
   - [ ] Confirm all TCK failures are triaged and no blocking issues remain.
-  - [ ] Confirm Temurin Compliance (TCK) sign-off per platform/version/binary type.
+  - [ ] Work with Release Champion and confirm Temurin Compliance (TCK) sign-off per platform/version/binary type as needed.
   - [ ] Notify Release Champion that TCK approval is granted for binary publishing.
-
----
-
-### Compliance Execution Summary
-
-| Version | TCK Execution & Triage | Automanual Tests | Compliance Sign-Off |
-| :--- | :---: | :---: | :---: |
-| **JDK 8 (LTS)** | [ ] | [ ] | [ ] |
-| **JDK 11 (LTS)** | [ ] | [ ] | [ ] |
-| **JDK 17 (LTS)** | [ ] | [ ] | [ ] |
-| **JDK 21 (LTS)** | [ ] | [ ] | [ ] |
-| **JDK 25 (LTS)** | [ ] | [ ] | [ ] |
-| **JDK xx (Feature/STS)** | [ ] | [ ] | [ ] |
 
 ---
 

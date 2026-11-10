@@ -86,10 +86,6 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 
 ## 2. Release Day & Execution
 
-### 📢 Communications & Program
-- [ ] 🤖 **Website Release Banner:** Verify release banner is live on adoptium.net; manually publish if automation did not trigger it.
-- [ ] 👤 **Track Progress:** Regularly update the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
-
 ### 🏗️ JDK Production
 - [ ] 👤 **Verify Upstream Tags:** Confirm OpenJDK GA tags (`-ga`) are tagged upstream.
 - [ ] 🤖 **Verify Source Mirrors:** Confirm [Git Mirrors](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/) synced the GA tags.
@@ -117,24 +113,23 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
   - [ ] Push images to Eclipse Temurin Docker Hub.
   - [ ] Submit Official Docker Library PR for updated tags.
 
-### 📢 Publishing & Announcements
+### 📢 Communications & Program
+- [ ] 🤖 **Website Release Banner:** Verify release banner is live on adoptium.net; manually publish if automation did not trigger it.
+- [ ] 👤 **Track Progress:** Regularly update the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
 - [ ] ⚙️ **Generate & Publish Release Notes:**
   - [ ] Run [create_release_notes](https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/) per JDK version.
   - [ ] Publish via the convenience link from the create_release_notes job that pre-populates the correct parameters in the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/).
   - [ ] Verify release notes are live on adoptium.net.
-- [ ] ⚙️ **Update Support Matrix:** Update [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc) and supported platforms documentation.
-- [ ] 👤 **Release Blog Post:** Publish the release blog post PR on adoptium.net.
-- [ ] 👤 **Public Announcements:** Announce release availability on Slack `#release`, social media, and community channels.
 
 ---
 
 ## 3. Post-Release Wrap-up & Completion
 
-- [ ] 🤖 **Remove Website Banner:** Verify release banner has been removed from adoptium.net; manually remove if automation did not trigger it.
+- [ ] ⚙️ **Update Support Matrix:** Update [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc) and supported platforms documentation.
+- [ ] 👤 **Release Blog Post:** Publish the release blog post PR on adoptium.net.
+- [ ] 👤 **Public Announcements:** Announce release availability on Slack `#release`, social media, and community channels.
 - [ ] 🤖 **Run SBOM & Validation Job:** Execute [download_and_sbom_validation](https://ci.adoptium.net/job/build-scripts/job/release/job/download_and_sbom_validation) to verify downloads, signatures, and SBOM metadata.
 - [ ] 👤 **Archive Test Evidence:**
   - [ ] Archive and publish all AQA test results.
-  - [ ] Confirm CRL has archived all TCK evidence and run `EclipseMirror` backup job.
 - [ ] 👤 **Prep Next Cycle:**
   - [ ] Open a GitHub issue in `adoptium.net` for next cycle's blog post / vulnerability advisory tracking.
-- [ ] 👤 **Declare Release Complete:** Hold retrospective review, declare release complete in `#release`, and close tracking issues.
