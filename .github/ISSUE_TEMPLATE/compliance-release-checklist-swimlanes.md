@@ -42,7 +42,7 @@ This checklist coordinates all Temurin Compliance (TCK) activities across the Ad
 Activities are categorized by the release swimlanes and tagged with automation levels:
 
 * 🧪 **Test & Compliance**: Test node maintenance, JCK/TCK test execution, triage, automanual testing, evidence preservation, and sign-offs.
-* 📢 **Communications & Program**: Retrospectives, tester coordination, Slack updates, and compliance status reporting.
+* 📢 **Communications**: Retrospectives, tester coordination, Slack updates, and compliance status reporting.
 
 **Automation Legend:**
 * 🤖 **[Automated]** — System triggers/runs automatically; human monitors or verifies completion.
@@ -55,7 +55,7 @@ Activities are categorized by the release swimlanes and tagged with automation l
 
 ## 1. Pre-Release Preparation (T-2 Weeks to T-1 Day)
 
-### 📢 Communications & Program
+### 📢 Communications
 - [ ] 👤 **Confirm CRL Lead:** Confirm **Compliance Release Lead (CRL)** and backup availability.
 - [ ] 👤 **Create Compliance Retrospective Issue:** Create private retrospective issue for Temurin Compliance.
 - [ ] 👤 **Helpdesk Ticket with EF:** Log a helpdesk ticket with Eclipse Foundation (EF) to get all test materials updated and prepare for any manual activities.
@@ -76,7 +76,7 @@ Activities are categorized by the release swimlanes and tagged with automation l
 
 ## 2. Release Day & Execution
 
-### 📢 Communications & Program
+### 📢 Communications
 - [ ] 👤 **TCK Tester Slack Reminders:** Remind TCK testers (via Slack comment) to update TCK triage issue with ownership and machine IP before running interactive/automanual tests.
 - [ ] 👤 **Compliance Status Updates:** Provide regular status updates in the `#release` channel and on the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
 
@@ -101,5 +101,5 @@ Activities are categorized by the release swimlanes and tagged with automation l
 - [ ] 👤 **Archive TCK Evidence:** Archive and upload all TCK evidence.
 - [ ] 👤 **Backup Release Artifacts:** Run [EclipseMirror](https://ci.eclipse.org/temurin-compliance/) job in Temurin Compliance Jenkins to back up release artifacts.
 
-### 📢 Communications & Program
+### 📢 Communications
 - [ ] 👤 **Compliance Retrospective:** Complete private retrospective review for Temurin Compliance and close compliance tracking issues.

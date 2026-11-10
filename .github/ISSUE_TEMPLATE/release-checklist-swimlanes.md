@@ -45,7 +45,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 * 🧪 **Test & Compliance**: AQA test execution & triage, Temurin Compliance (TCK), and test node maintenance.
 * 📦 **Installers**: Native OS installers (Linux packages, Windows MSI, macOS PKG & notarization, Homebrew).
 * 🐳 **Container Images**: Official Docker Hub and Eclipse Temurin container image builds, tests, and manifest updates.
-* 📢 **Communications & Program**: Status tracking, website banners, release notes, documentation, announcements, and retrospectives.
+* 📢 **Communications**: Status tracking, website banners, release notes, documentation, announcements, and retrospectives.
 
 **Automation Legend:**
 * 🤖 **[Automated]** — System triggers/runs automatically; human monitors or verifies completion.
@@ -58,7 +58,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 
 ## 1. Pre-Release Preparation (T-2 Weeks to T-1 Day)
 
-### 📢 Communications & Program
+### 📢 Communications
 - [ ] 👤 **Name Release Leads:** Confirm **Release Champion** and **Compliance Release Lead (CRL)** and update the Release Information section of this checklist.
 - [ ] 👤 **Identify Release Versions:** Confirm expected GA versions from [java.com/releases](https://www.java.com/releases/).
 - [ ] ⚙️ **Create Tracking Issues:** Run the [Create Release Tracking Issues](https://github.com/adoptium/temurin/actions/workflows/create-release-tracking-issues.yml) workflow to generate a `Release Status Issue`, `Public Retrospective Issue`, and `Compliance Release Checklist` in `adoptium/temurin`.
@@ -114,7 +114,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
   - [ ] Push images to Eclipse Temurin Docker Hub.
   - [ ] Submit Official Docker Library PR for updated tags.
 
-### 📢 Communications & Program
+### 📢 Communications
 - [ ] 🤖 **Website Release Banner:** Verify release banner is live on adoptium.net; manually publish if automation did not trigger it.
 - [ ] 👤 **Track Progress:** Regularly update the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
 - [ ] ⚙️ **Generate & Publish Release Notes:**
