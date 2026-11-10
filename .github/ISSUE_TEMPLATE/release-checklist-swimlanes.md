@@ -61,10 +61,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 ### 📢 Communications & Program
 - [ ] 👤 **Name Release Leads:** Confirm **Release Champion** and **Compliance Release Lead (CRL)** and update the Release Information section of this checklist.
 - [ ] 👤 **Identify Release Versions:** Confirm expected GA versions from [java.com/releases](https://www.java.com/releases/).
-- [ ] 👤 **Create Tracking Issues:**
-  - [ ] [Create Release Status Issue](https://github.com/adoptium/temurin/issues/new?template=release-status.md) in `adoptium/temurin`.
-  - [ ] [Create Public Retrospective Issue](https://github.com/adoptium/temurin/issues/new?template=retrospectives.md) in `adoptium/temurin`.
-  - [ ] CRL: [Create Compliance Release Checklist](https://github.com/adoptium/temurin/issues/new?template=compliance-release-checklist-swimlanes.md) and private retrospective issue.
+- [ ] ⚙️ **Create Tracking Issues:** Run the [Create Release Tracking Issues](https://github.com/adoptium/temurin/actions/workflows/create-release-tracking-issues.yml) workflow to generate a `Release Status Issue`, `Public Retrospective Issue`, and `Compliance Release Checklist` in `adoptium/temurin`.
 - [ ] 👤 **Update Slack:** Post bookmark links to tracking issues in the `#release` channel.
 - [ ] 👤 **Branching Notification:** Post [branching announcement](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories) to `#build` and `#release`.
 
@@ -128,19 +125,6 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 - [ ] ⚙️ **Update Support Matrix:** Update [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc) and supported platforms documentation.
 - [ ] 👤 **Release Blog Post:** Publish the release blog post PR on adoptium.net.
 - [ ] 👤 **Public Announcements:** Announce release availability on Slack `#release`, social media, and community channels.
-
----
-
-### Release Execution Summary
-
-| Version | Release Pipeline | AQA / Triage Issue | Binaries Published | Installers Published | Container Images Published |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| **JDK 8 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/) | | [ ] | [ ] | [ ] |
-| **JDK 11 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk11-pipeline/) | | [ ] | [ ] | [ ] |
-| **JDK 17 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk17-pipeline/) | | [ ] | [ ] | [ ] |
-| **JDK 21 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk21-pipeline/) | | [ ] | [ ] | [ ] |
-| **JDK 25 (LTS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk25-pipeline/) | | [ ] | [ ] | [ ] |
-| **JDK xx (Feature/STS)** | [Pipeline](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdkxx-pipeline/) | | [ ] | [ ] | [ ] |
 
 ---
 
