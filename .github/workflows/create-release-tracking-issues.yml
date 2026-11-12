@@ -1,0 +1,143 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Create Release Tracking Issues
+
+on:
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Release Month (e.g. April, July, October, January)"
+        required: true
+        type: string
+      year:
+        description: "Release Year (e.g. 2026)"
+        required: true
+        type: string
+      releaseChampion:
+        description: "Release Champion GitHub username (without @)"
+        required: false
+        type: string
+      crl:
+        description: "Compliance Release Lead (CRL) GitHub username (without @)"
+        required: false
+        type: string
+      targetReleaseDate:
+        description: "Target Release Date (YYYY-MM-DD)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-tracking-issues:
+    name: Create Tracking Issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Create Tracking Issues
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const month = context.payload.inputs.month.trim();
+            const year = context.payload.inputs.year.trim();
+            const champion = (context.payload.inputs.releaseChampion || '').trim().replace(/^@/, '');
+            const crl = (context.payload.inputs.crl || '').trim().replace(/^@/, '');
+            const targetDate = (context.payload.inputs.targetReleaseDate || '').trim();
+
+            function getTemplateBody(filename) {
+              const filepath = path.join(process.env.GITHUB_WORKSPACE, '.github', 'ISSUE_TEMPLATE', filename);
+              const content = fs.readFileSync(filepath, 'utf8');
+              const match = content.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n([\s\S]*)$/);
+              return match ? match[1] : content;
+            }
+
+            // 1. Create Release Status Issue
+            let statusBody = getTemplateBody('release-status.md');
+            statusBody = statusBody.replace(/<month>/gi, month).replace(/<year>/gi, year);
+            const statusTitle = `${month} ${year} Release Status per Platform, Version & Binary Type`;
+
+            const statusIssue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: statusTitle,
+              body: statusBody
+            });
+            console.log(`Created Release Status Issue #${statusIssue.data.number}: ${statusIssue.data.html_url}`);
+
+            // 2. Create Public Retrospective Issue
+            let retroBody = getTemplateBody('retrospectives.md');
+            retroBody = retroBody.replace(/<month>/gi, month).replace(/<year>/gi, year);
+            const retroTitle = `General Retrospective for ${month} ${year} Releases`;
+
+            const retroIssue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: retroTitle,
+              body: retroBody,
+              labels: ['Retrospective']
+            });
+            console.log(`Created Retrospective Issue #${retroIssue.data.number}: ${retroIssue.data.html_url}`);
+
+            // 3. Create Compliance Release Checklist
+            let complianceBody = getTemplateBody('compliance-release-checklist-swimlanes.md');
+            complianceBody = complianceBody
+              .replace(/<Month>/g, month)
+              .replace(/<month>/g, month.toLowerCase())
+              .replace(/<Year>/g, year)
+              .replace(/<year>/g, year);
+
+            if (targetDate) {
+              complianceBody = complianceBody.replace(/`YYYY-MM-DD`/g, `\`${targetDate}\``);
+            }
+            if (champion) {
+              complianceBody = complianceBody.replace(/Release Champion\*\* \| @username/g, `Release Champion** | @${champion}`);
+            }
+            if (crl) {
+              complianceBody = complianceBody.replace(/Compliance Release Lead \(CRL\)\*\* \| @username/g, `Compliance Release Lead (CRL)** | @${crl}`);
+            }
+            // Populate Release Status link in Compliance checklist
+            complianceBody = complianceBody.replace(
+              /\[Link to Release Status Issue\]\(https:\/\/github\.com\/adoptium\/temurin\/issues\/TEMPLATE_UPDATEME\)/g,
+              `[Release Status Issue #${statusIssue.data.number}](${statusIssue.data.html_url})`
+            );
+            // Remove top placeholder NOTE notice
+            complianceBody = complianceBody.replace(/> \*\*NOTE:\*\* Replace placeholder values[\s\S]*?then remove this notice\.\r?\n\r?\n/, '');
+
+            const complianceTitle = `Compliance Checklist for Temurin Release ${month} ${year}`;
+            const complianceAssignees = crl ? [crl] : [];
+
+            const complianceIssue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: complianceTitle,
+              body: complianceBody,
+              assignees: complianceAssignees
+            });
+            console.log(`Created Compliance Release Checklist #${complianceIssue.data.number}: ${complianceIssue.data.html_url}`);
+
+            // Write Step Summary
+            await core.summary
+              .addHeading(`Release Tracking Issues Created (${month} ${year})`, 2)
+              .addList([
+                `**Release Status Issue:** [#${statusIssue.data.number} - ${statusTitle}](${statusIssue.data.html_url})`,
+                `**Public Retrospective Issue:** [#${retroIssue.data.number} - ${retroTitle}](${retroIssue.data.html_url})`,
+                `**Compliance Release Checklist:** [#${complianceIssue.data.number} - ${complianceTitle}](${complianceIssue.data.html_url})`
+              ])
+              .write();
