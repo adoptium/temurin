@@ -251,6 +251,21 @@ const DOCKER_ARCH = { x64: 'amd64', aarch64: 'arm64', arm32: 'arm', ppcle64: 'pp
 
 const escapeRe = str => str.replace(/[.+*?^${}()|[\]\\]/g, '\\$&');
 
+const PUBLISH_COLUMNS = ['publishStatus', 'installerStatus', 'imagesStatus'];
+
+/**
+ * Marks the given columns of a record as unknown because a lookup failed. updateBody then keeps the cells already
+ * shown in the issue instead of resetting them to the status.csv default. NotPlanned columns are never marked.
+ * 'Version' keeps the existing "###" heading.
+ */
+function keepExisting(rec, ...cols) {
+  const keep = new Set(rec._keep || []);
+  for (const c of cols) {
+    if (c === 'Version' || String(rec[c]).toLowerCase() !== 'notplanned') keep.add(c);
+  }
+  return { ...rec, _keep: keep };
+}
+
 /** Wraps an async lookup: results are cached per key, and failures are logged and returned as undefined. */
 function safeLookup(fetcher, what, warn = () => {}) {
   const cache = new Map();
@@ -298,10 +313,12 @@ async function fetchReleaseNames(feature, fetchImpl = fetch) {
 /**
  * Sets each record's Version from the release plan: the full release name (e.g. "jdk-21.0.13.1+2") when the
  * Adoptium API knows it, otherwise the plan tag without a build number (e.g. "jdk-21.0.13.1"). Features that are
- * not in the plan, or whose release names cannot be fetched, keep the Version from status.csv.
+ * not in the plan keep the Version from status.csv. If the release names cannot be fetched, the existing heading and
+ * published/installer/image cells in the issue are kept.
  */
 async function applyReleasePlan(records, plan, fetchNames = fetchReleaseNames, warn = () => {}) {
   const resolved = new Map();
+  const failed = new Set();
   for (const feature of new Set(records.filter(r => r.Version).map(r => featureOf(r.Version)))) {
     const prefix = plan.get(feature);
     if (!prefix) continue;
@@ -311,10 +328,16 @@ async function applyReleasePlan(records, plan, fetchNames = fetchReleaseNames, w
         .sort((x, y) => Number(re.exec(y)[1]) - Number(re.exec(x)[1]))[0];
       resolved.set(feature, best || prefix);
     } catch (e) {
+      failed.add(feature);
       warn(`Could not resolve the ${prefix} release name from the Adoptium API: ${e.message}`);
     }
   }
-  return records.map(r => (r.Version && resolved.has(featureOf(r.Version)) ? { ...r, Version: resolved.get(featureOf(r.Version)) } : r));
+  return records.map(r => {
+    if (!r.Version) return r;
+    const feature = featureOf(r.Version);
+    if (failed.has(feature)) return keepExisting(r, 'Version', ...PUBLISH_COLUMNS);
+    return resolved.has(feature) ? { ...r, Version: resolved.get(feature) } : r;
+  });
 }
 
 /**
@@ -352,6 +375,7 @@ async function applyPublished(records, lookup, log = () => {}, warn = () => {}) 
       continue;
     }
     const published = await lookup(rec.Version);
+    if (published === undefined) { out.push(keepExisting(rec, ...PUBLISH_COLUMNS)); continue; } // lookup failed
     if (!published || !published.has(apiKey(rec.Platform))) { out.push(rec); continue; }
     const gated = ['AQAstatus', 'TCKstatus'].filter(c => rec[c].toLowerCase() !== 'completed');
     if (gated.length) {
@@ -428,7 +452,8 @@ async function applyInstallers(records, releaseLookup, packageLookup, log = () =
       done = Boolean(release && release.get(apiKey(rec.Platform)));
     } else if (os === 'linux' || os === 'alpine-linux') {
       const pkg = PKG_ARCH[arch];
-      const found = pkg && await packageLookup(rec.Version);
+      const found = pkg ? await packageLookup(rec.Version) : null;
+      if (found === undefined) { out.push(keepExisting(rec, 'installerStatus')); continue; } // lookup failed
       if (found) {
         done = os === 'linux' ? Boolean(pkg.deb && pkg.rpm && found.deb.has(pkg.deb) && found.rpm.has(pkg.rpm))
                               : Boolean(pkg.apk && found.apk.has(pkg.apk));
@@ -496,6 +521,7 @@ async function applyImages(records, imageLookup, log = () => {}) {
       continue;
     }
     const images = await imageLookup(rec.Version);
+    if (images === undefined) { out.push(keepExisting(rec, 'imagesStatus')); continue; } // lookup failed
     if (images && images.has(key)) {
       log(`${rec.Version} ${rec.Platform} imagesStatus: ${rec.imagesStatus} -> Completed (Docker Hub)`);
       out.push({ ...rec, imagesStatus: 'Completed' });
@@ -505,6 +531,9 @@ async function applyImages(records, imageLookup, log = () => {}) {
   }
   return out;
 }
+
+/** The cell text of a status column: the cell kept from the issue, or the emoji of the status. */
+const cell = (r, col) => (r._raw && r._raw[col]) || emoji(r[col], r, col);
 
 /** Renders the markdown table for the rows of one version. */
 function renderTable(feature, rows) {
@@ -516,14 +545,54 @@ function renderTable(feature, rows) {
   for (const r of rows) {
     out.push(
       `| ${platformDisplay(r.Platform)} ` +
-      `| ${emoji(r.AQAstatus, r, 'AQAstatus')} ` +
-      `| ${emoji(r.TCKstatus, r, 'TCKstatus')} ` +
-      `| ${emoji(r.publishStatus, r, 'publishStatus')} ` +
-      `| ${emoji(r.installerStatus, r, 'installerStatus')} ` +
-      `| ${emoji(r.imagesStatus, r, 'imagesStatus')} ` +
+      `| ${cell(r, 'AQAstatus')} ` +
+      `| ${cell(r, 'TCKstatus')} ` +
+      `| ${cell(r, 'publishStatus')} ` +
+      `| ${cell(r, 'installerStatus')} ` +
+      `| ${cell(r, 'imagesStatus')} ` +
       `| ${r.Notes.replace(/\|/g, '\\|')} |`);
   }
   return out;
+}
+
+/**
+ * Replaces only the JDK version token of a "### JDK..." heading of this feature, keeping any text after it
+ * (e.g. "### JDK21 - Linux delayed" -> "### jdk-21.0.13.1+2 - Linux delayed"). Other headings are left alone.
+ * The template's "(UPDATE COLUMN HEADERS v)" hint is dropped.
+ */
+function retitleHeading(line, feature, heading) {
+  const m = /^(###\s+)(jdk-?(\d+)[\w.+-]*)(.*)$/i.exec(line);
+  if (!m || m[3] !== feature) return line;
+  const rest = m[4].replace(/^\s+or\s+JDK<FEATURE>\+Y\s*\(UPDATE COLUMN HEADERS[^)]*\)\s*$/i, '');
+  return `${m[1]}${heading}${rest}`;
+}
+
+const STATUS_COLUMNS = ['AQAstatus', 'TCKstatus', 'publishStatus', 'installerStatus', 'imagesStatus'];
+const rowKey = platformCell => platformCell.replace(/\*/g, '').trim().toLowerCase();
+
+/** Reads the status cells shown in the issue for a feature's table: Map(platform key -> [5 status cells]). */
+function parseExistingRows(body, feature) {
+  const rows = new Map();
+  const lines = body.split(/\r?\n/);
+  const headerRe = new RegExp(`^\\s*\\|.*\\bjdk${feature} AQA\\b`, 'i');
+  const start = lines.findIndex(l => headerRe.test(l));
+  if (start < 0) return rows;
+  for (let i = start + 1; i < lines.length && /^\s*\|/.test(lines[i]); i++) {
+    const cells = lines[i].split(/(?<!\\)\|/).map(c => c.trim());
+    if (cells.length < 7 || /^[-: ]+$/.test(cells[1])) continue;
+    rows.set(rowKey(cells[1]), cells.slice(2, 7));
+  }
+  return rows;
+}
+
+/** Attaches the cells shown in the issue for the columns of a record that must be kept. */
+function withExistingCells(rec, existing) {
+  if (!rec._keep || rec._keep.size === 0) return rec;
+  const cells = existing.get(rowKey(platformDisplay(rec.Platform)));
+  if (!cells) return rec;
+  const raw = {};
+  STATUS_COLUMNS.forEach((col, i) => { if (rec._keep.has(col) && cells[i]) raw[col] = cells[i]; });
+  return { ...rec, _raw: raw };
 }
 
 /**
@@ -548,7 +617,7 @@ function replaceTable(body, feature, tableLines, heading) {
   // Keep the "### <version>" heading above the table in sync with the CSV Version.
   let h = start - 1;
   while (h >= 0 && lines[h].trim() === '') h--;
-  if (heading && h >= 0 && /^###\s/.test(lines[h])) lines[h] = `### ${heading}`;
+  if (heading && h >= 0) lines[h] = retitleHeading(lines[h], feature, heading);
   return lines.join(eol);
 }
 
@@ -563,7 +632,10 @@ function updateBody(body, records) {
   }
   let updated = body;
   for (const [feature, rows] of byVersion) {
-    updated = replaceTable(updated, feature, renderTable(feature, rows), rows[0].Version);
+    const existing = parseExistingRows(updated, feature);
+    const shown = rows.map(r => withExistingCells(r, existing));
+    const heading = rows[0]._keep && rows[0]._keep.has('Version') ? undefined : rows[0].Version;
+    updated = replaceTable(updated, feature, renderTable(feature, shown), heading);
   }
   return updated;
 }
@@ -593,7 +665,8 @@ async function run({ github, context, core }) {
     core.info(`Found ${triage.length} triage issue(s) in ${aqaRepo} for ${cycle}.`);
     records = applyTriage(records, triage, msg => core.info(msg));
   } else {
-    core.warning(`Could not determine "<Month> <Year>" from the title of #${issueNumber}; skipping triage lookup.`);
+    core.warning(`Could not determine "<Month> <Year>" from the title of #${issueNumber}; not updating the issue.`);
+    return;
   }
 
   const info = msg => core.info(msg);
@@ -603,7 +676,8 @@ async function run({ github, context, core }) {
     const plan = await fetchReleasePlan(config.releasePlanUrl || RELEASE_PLAN_URL);
     records = await applyReleasePlan(records, plan, fetchReleaseNames, warn);
   } catch (e) {
-    warn(`Could not read the release plan; using the Version column of status.csv: ${e.message}`);
+    warn(`Could not read the release plan; keeping the existing headings and published/installer/image cells: ${e.message}`);
+    records = records.map(r => (r.Version ? keepExisting(r, 'Version', ...PUBLISH_COLUMNS) : r));
   }
 
   const releases = safeLookup(fetchPublishedPlatforms, 'the Adoptium API', warn);
@@ -613,7 +687,13 @@ async function run({ github, context, core }) {
   records = await applyInstallers(records, releases, packages, info);
   records = await applyImages(records, images, info);
 
-  const oldBody = issue.data.body || '';
+  // Re-read the issue so that edits made while the lookups ran are not overwritten.
+  const current = await github.rest.issues.get({ owner, repo, issue_number: issueNumber });
+  if (current.data.state !== 'open') {
+    core.info(`Issue #${issueNumber} was closed; nothing to update.`);
+    return;
+  }
+  const oldBody = current.data.body || '';
   const newBody = updateBody(oldBody, records);
   if (newBody === oldBody) {
     core.info(`Issue #${issueNumber} is already up to date.`);
@@ -630,4 +710,5 @@ module.exports = {
   parseReleasePlan, fetchReleasePlan, fetchReleaseNames, applyReleasePlan,
   packageTokens, fetchLinuxPackages, applyInstallers,
   dockerTagOf, fetchImagePlatforms, imageKey, applyImages,
+  keepExisting, retitleHeading, parseExistingRows,
 };
