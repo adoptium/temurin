@@ -327,7 +327,7 @@ async function fetchPublishedPlatforms(tag, fetchImpl = fetch) {
   if (!res.ok) throw new Error(`Adoptium API returned HTTP ${res.status}`);
   const release = await res.json();
   const published = new Map();
-  for (const b of release.flatMap(r => r.binaries || [])) {
+  for (const b of release.binaries || []) {
     if (b.image_type === 'jdk') published.set(`${b.architecture}|${b.os}`, Boolean(b.installer));
   }
   return published;
