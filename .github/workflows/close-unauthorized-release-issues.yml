@@ -33,7 +33,7 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           # List of template filenames to check
-          TEMPLATES=("release-checklist.md" "release-status.md")
+          TEMPLATES=("release-checklist.md" "release-checklist-swimlanes.md" "compliance-release-checklist-swimlanes.md" "release-status.md")
           
           IS_FROM_TEMPLATE=false
           # Check if body contains template-specific content patterns
