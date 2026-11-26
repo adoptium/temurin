@@ -36,6 +36,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/release-status
 
       - name: Update status tables in release status issue
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0

@@ -17,7 +17,8 @@
 // the aqa-tests repository ("Triage Automated Tests for <Month> <Year> JDK<N> - <platform>").
 // Each column is derived on its own from the issue's checklist
 // ("Triage AQAvit tests" -> AQAstatus, "Triage TCK automated tests" -> TCKstatus):
-//   - issue closed, or the column's box ticked  -> Completed
+//   - issue closed as "not planned"             -> NotPlanned
+//   - issue closed any other way, or the column's box ticked -> Completed
 //   - otherwise, issue has comments, was reopened, or another box is ticked -> InProgress
 //   - otherwise nothing is derived and the status.csv value is used
 // A derived value replaces the status.csv value (so a reopened issue drops back to InProgress),
@@ -188,8 +189,12 @@ function parseChecklist(body) {
 
 /** Triage issue + column (AQAstatus|TCKstatus) -> derived status, or null when nothing can be derived. */
 function triageStatus(issue, col) {
+  if (issue.state === 'closed') {
+    // Closed as "not planned" means the work will not be done; any other close counts as done.
+    return issue.state_reason === 'not_planned' ? 'NotPlanned' : 'Completed';
+  }
   const boxes = parseChecklist(issue.body);
-  if (issue.state === 'closed' || boxes[col]) return 'Completed';
+  if (boxes[col]) return 'Completed';
   const anyTicked = Object.values(boxes).some(Boolean);
   if ((issue.comments || 0) > 0 || issue.state_reason === 'reopened' || anyTicked) return 'InProgress';
   return null;
@@ -224,11 +229,29 @@ function applyTriage(records, triageIssues, log = () => {}) {
   });
 }
 
-/** Fetches the triage issues for the given release cycle from the aqa-tests repository. */
+/**
+ * Fetches the triage issues for the given release cycle (e.g. "November 2026") from the aqa-tests repository.
+ * Lists the repository's issues instead of using the search API: search runs on a lagging index and can return
+ * partial results with HTTP 200 (incomplete_results), which would silently reset AQA/TCK cells. Issues are
+ * limited to those updated since the start of the month before the cycle, then filtered by title.
+ */
 async function fetchTriageIssues(github, aqaRepo, cycle) {
-  const q = `repo:${aqaRepo} is:issue in:title "${TRIAGE_TITLE_PREFIX} ${cycle}"`;
-  return github.paginate(github.rest.search.issuesAndPullRequests, { q, per_page: 100 });
+  const [owner, repo] = aqaRepo.split('/');
+  const start = Date.parse(`1 ${cycle} UTC`);
+  if (!owner || !repo) throw new Error(`invalid aqaRepo "${aqaRepo}" (expected owner/repo)`);
+  if (Number.isNaN(start)) throw new Error(`cannot read a month and year from "${cycle}"`);
+  const d = new Date(start);
+  const since = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() - 1, 1)).toISOString();
+  const prefix = `${TRIAGE_TITLE_PREFIX} ${cycle}`;
+  const issues = await github.paginate(github.rest.issues.listForRepo, { owner, repo, state: 'all', since, per_page: 100 });
+  return issues.filter(i => !i.pull_request && (i.title || '').startsWith(prefix));
 }
+
+const FETCH_TIMEOUT_MS = 30000;
+const MAX_DOCKER_PAGES = 10;
+
+/** fetch with a timeout, so that a hung service fails its lookup instead of stalling the whole job. */
+const timedFetch = (url, options = {}) => fetch(url, { ...options, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
 
 const ADOPTIUM_API = 'https://api.adoptium.net/v3';
 const RELEASE_PLAN_URL = 'https://raw.githubusercontent.com/adoptium/mirror-scripts/master/releasePlan.cfg';
@@ -295,14 +318,14 @@ function parseReleasePlan(text) {
   return plan;
 }
 
-async function fetchReleasePlan(url = RELEASE_PLAN_URL, fetchImpl = fetch) {
+async function fetchReleasePlan(url = RELEASE_PLAN_URL, fetchImpl = timedFetch) {
   const res = await fetchImpl(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return parseReleasePlan(await res.text());
 }
 
 /** GA release names known to the Adoptium API for a feature version, newest first. */
-async function fetchReleaseNames(feature, fetchImpl = fetch) {
+async function fetchReleaseNames(feature, fetchImpl = timedFetch) {
   const range = encodeURIComponent(`[${feature},${Number(feature) + 1})`);
   const res = await fetchImpl(`${ADOPTIUM_API}/info/release_names?release_type=ga&vendor=eclipse&page_size=50&sort_order=DESC&version=${range}`);
   if (res.status === 404) return [];
@@ -344,14 +367,16 @@ async function applyReleasePlan(records, plan, fetchNames = fetchReleaseNames, w
  * Fetches the published binaries of a release tag from the Adoptium API.
  * Returns Map("<arch>|<os>" -> has installer) for the jdk binaries, or null if the tag is not published (404).
  */
-async function fetchPublishedPlatforms(tag, fetchImpl = fetch) {
+async function fetchPublishedPlatforms(tag, fetchImpl = timedFetch) {
   const res = await fetchImpl(`${ADOPTIUM_API}/assets/release_name/eclipse/${encodeURIComponent(tag)}?project=jdk`);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Adoptium API returned HTTP ${res.status}`);
   const release = await res.json();
   const published = new Map();
   for (const b of release.binaries || []) {
-    if (b.image_type === 'jdk') published.set(`${b.architecture}|${b.os}`, Boolean(b.installer));
+    if (b.image_type !== 'jdk') continue;
+    const key = `${b.architecture}|${b.os}`;
+    published.set(key, published.get(key) || Boolean(b.installer)); // several binaries per platform: any installer counts
   }
   return published;
 }
@@ -369,6 +394,7 @@ function apiKey(platform) {
  */
 async function applyPublished(records, lookup, log = () => {}, warn = () => {}) {
   const out = [];
+  const early = [];
   for (const rec of records) {
     if (!rec.Version || !isReleaseTag(rec.Version) || rec.publishStatus.toLowerCase() === 'notplanned') {
       out.push(rec);
@@ -379,7 +405,7 @@ async function applyPublished(records, lookup, log = () => {}, warn = () => {}) 
     if (!published || !published.has(apiKey(rec.Platform))) { out.push(rec); continue; }
     const gated = ['AQAstatus', 'TCKstatus'].filter(c => rec[c].toLowerCase() !== 'completed');
     if (gated.length) {
-      warn(`${rec.Version} ${rec.Platform} is published but ${gated.join(' and ')} is not Completed.`);
+      early.push(`${rec.Version} ${rec.Platform} (${gated.join(' and ')})`);
       out.push(rec);
       continue;
     }
@@ -388,6 +414,7 @@ async function applyPublished(records, lookup, log = () => {}, warn = () => {}) 
     }
     out.push({ ...rec, publishStatus: 'Completed' });
   }
+  if (early.length) warn(`Published before AQA and TCK are Completed, so publishStatus is not shown: ${early.join('; ')}`);
   return out;
 }
 
@@ -410,7 +437,7 @@ function packageTokens(name) {
  * Finds the Temurin Linux packages of a release in the packages.adoptium.net Artifactory (anonymous search).
  * Returns { deb, rpm, apk }: Sets of package architectures that exist.
  */
-async function fetchLinuxPackages(name, fetchImpl = fetch) {
+async function fetchLinuxPackages(name, fetchImpl = timedFetch) {
   const t = packageTokens(name);
   if (!t) throw new Error(`cannot derive package versions from "${name}"`);
   const N = t.feature;
@@ -477,13 +504,14 @@ function dockerTagOf(name) {
  * Lists the platforms of the eclipse-temurin "<tag>-jdk*" images on Docker Hub as a Set of
  * "linux/<arch>", "windows/<arch>" and "alpine/<arch>" (for the -alpine variants).
  */
-async function fetchImagePlatforms(name, fetchImpl = fetch) {
+async function fetchImagePlatforms(name, fetchImpl = timedFetch) {
   const tag = dockerTagOf(name);
   if (!tag) throw new Error(`cannot derive a Docker tag from "${name}"`);
   const prefix = `${tag}-jdk`;
   const found = new Set();
   let url = `${DOCKER_TAGS}?page_size=100&name=${encodeURIComponent(prefix)}`;
-  while (url) {
+  for (let pages = 1; url; pages++) {
+    if (pages > MAX_DOCKER_PAGES) throw new Error(`more than ${MAX_DOCKER_PAGES} pages of tags for ${prefix}`);
     const res = await fetchImpl(url);
     if (!res.ok) throw new Error(`Docker Hub returned HTTP ${res.status}`);
     const page = await res.json();
@@ -532,14 +560,21 @@ async function applyImages(records, imageLookup, log = () => {}) {
   return out;
 }
 
+const GENERATED_NOTE = '_This table is generated from `.github/release-status/status.csv` every 10 minutes. ' +
+  'Manual edits to it are overwritten; to change a status that is not derived, open a pull request for that file._';
+
 /** The cell text of a status column: the cell kept from the issue, or the emoji of the status. */
 const cell = (r, col) => (r._raw && r._raw[col]) || emoji(r[col], r, col);
 
 /** Renders the markdown table for the rows of one version. */
-function renderTable(feature, rows) {
+function renderTable(feature, rows, links = new Map()) {
   const jdk = `jdk${feature}`;
+  const link = label => (links.has(label.toLowerCase()) ? `[${label}](${links.get(label.toLowerCase())})` : label);
+  const header = ['Platform', `${jdk} AQA`, `${jdk} TCK`, `${jdk} published`, `${jdk} installers`, `${jdk} images`, 'Notes'];
   const out = [
-    `| Platform | ${jdk} AQA | ${jdk} TCK | ${jdk} published | ${jdk} installers | ${jdk} images | Notes |`,
+    GENERATED_NOTE,
+    '',
+    `| ${header.map(link).join(' | ')} |`,
     '| ----- | ----- | ----- | ----- | ----- | ----- | ----- |',
   ];
   for (const r of rows) {
@@ -569,6 +604,15 @@ function retitleHeading(line, feature, heading) {
 
 const STATUS_COLUMNS = ['AQAstatus', 'TCKstatus', 'publishStatus', 'installerStatus', 'imagesStatus'];
 const rowKey = platformCell => platformCell.replace(/\*/g, '').trim().toLowerCase();
+
+/** Reads the markdown links of a feature's table header, e.g. "[jdk21 AQA](url)": Map(lower-case label -> url). */
+function parseHeaderLinks(body, feature) {
+  const links = new Map();
+  const headerRe = new RegExp(`^\\s*\\|.*\\bjdk${feature} AQA\\b`, 'i');
+  const header = body.split(/\r?\n/).find(l => headerRe.test(l));
+  for (const m of (header || '').matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) links.set(m[1].trim().toLowerCase(), m[2]);
+  return links;
+}
 
 /** Reads the status cells shown in the issue for a feature's table: Map(platform key -> [5 status cells]). */
 function parseExistingRows(body, feature) {
@@ -613,9 +657,12 @@ function replaceTable(body, feature, tableLines, heading) {
   }
   let end = start;
   while (end < lines.length && /^\s*\|/.test(lines[end])) end++;
-  lines.splice(start, end - start, ...tableLines);
+  // The table is preceded by the generated-content note and a blank line, which are replaced with it.
+  let from = start;
+  if (start >= 2 && lines[start - 1].trim() === '' && lines[start - 2].trim() === GENERATED_NOTE) from = start - 2;
+  lines.splice(from, end - from, ...tableLines);
   // Keep the "### <version>" heading above the table in sync with the CSV Version.
-  let h = start - 1;
+  let h = from - 1;
   while (h >= 0 && lines[h].trim() === '') h--;
   if (heading && h >= 0) lines[h] = retitleHeading(lines[h], feature, heading);
   return lines.join(eol);
@@ -635,7 +682,7 @@ function updateBody(body, records) {
     const existing = parseExistingRows(updated, feature);
     const shown = rows.map(r => withExistingCells(r, existing));
     const heading = rows[0]._keep && rows[0]._keep.has('Version') ? undefined : rows[0].Version;
-    updated = replaceTable(updated, feature, renderTable(feature, shown), heading);
+    updated = replaceTable(updated, feature, renderTable(feature, shown, parseHeaderLinks(updated, feature)), heading);
   }
   return updated;
 }
@@ -705,10 +752,10 @@ async function run({ github, context, core }) {
 
 module.exports = {
   run, parseCsv, parseProperties, renderTable, replaceTable, updateBody,
-  normalizePlatform, releaseCycleOf, parseTriageIssue, parseChecklist, triageStatus, applyTriage,
+  normalizePlatform, releaseCycleOf, parseTriageIssue, parseChecklist, triageStatus, applyTriage, fetchTriageIssues,
   isReleaseTag, fetchPublishedPlatforms, applyPublished, safeLookup,
   parseReleasePlan, fetchReleasePlan, fetchReleaseNames, applyReleasePlan,
   packageTokens, fetchLinuxPackages, applyInstallers,
   dockerTagOf, fetchImagePlatforms, imageKey, applyImages,
-  keepExisting, retitleHeading, parseExistingRows,
+  keepExisting, retitleHeading, parseExistingRows, parseHeaderLinks, GENERATED_NOTE, timedFetch,
 };

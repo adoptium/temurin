@@ -5,12 +5,22 @@ The workflow [`update-release-status.yml`](../workflows/update-release-status.ym
 (created from [`release-status.md`](../ISSUE_TEMPLATE/release-status.md)) from [`status.csv`](status.csv).
 The issue is only edited when the generated content differs.
 
+Each generated table starts with a note saying that it is generated and that manual edits are overwritten. Anything
+outside the tables (intro text, headings' extra text, notes below a table) is preserved, as are hyperlinks that were added
+to a table's header cells (for example `[jdk21 AQA](https://github.com/adoptium/aqa-tests/issues/7984)`).
+
+The issue title must start with an English month and a four digit year (for example `November 2026 Release Status ...`):
+the title is matched with `[A-Za-z]+\s+\d{4}`, and the workflow does not update the issue if it cannot read it.
+
 ## Usage
 
-1. After the release status issue is created, set `issue=<number>` in [`config.properties`](config.properties).
+1. After the release status issue is created, open a PR that sets `issue=<number>` in [`config.properties`](config.properties)
+   (`main` is protected, and scheduled workflows only run from `main`). This is the "Enable Status Table Updates" step of the
+   [release checklist](../ISSUE_TEMPLATE/release-checklist-swimlanes.md).
 2. Nothing else is needed as the release progresses: the statuses are derived from the sources below. Only open a PR
    against [`status.csv`](status.csv) when a release will not ship something (see "Defaults and per-release exceptions").
-3. Clear `issue=` after the release so the workflow does nothing between releases.
+3. After the release, open a PR that clears `issue=` so that the workflow does nothing between releases (the "Disable Status
+   Table Updates" step of the release checklist). The workflow also does nothing once the status issue is closed.
 
 ## status.csv columns
 
@@ -21,7 +31,8 @@ The issue is only edited when the generated content differs.
   workflow replaces it from the release plan (see below). Set an exact tag such as `jdk8u514-b01` or `jdk-21.0.13.1+2`
   only for versions that are not in the release plan.
 - `Platform`: `<arch>_<os>`, e.g. `x64_linux`, `aarch64_mac`, `ppc64_aix`, `x64_alpine-linux`
-  (`x86-64_mac` is accepted as `x64_mac`). x64/aarch64 Linux/Windows/Mac are rendered in bold.
+  (`x86-64_mac` is accepted as `x64_mac`). `x64_linux`, `x64_windows`, `x64_mac`, `aarch64_linux` and `aarch64_mac`
+  are rendered in bold (not `aarch64_windows`).
 - Status columns (the CSV only needs `NotStarted` or `NotPlanned`; the other values are derived): `Completed` (:heavy_check_mark:), `InProgress` (:hourglass_flowing_sand:),
   `NotStarted` (:pause_button:), `NotPlanned` (:no_entry:).
 - `Notes`: free text; quote it if it contains a comma.
@@ -45,8 +56,9 @@ adds a Note), and revert it in a PR after the release. Because `NotPlanned` is n
 ## Derived AQA and TCK status
 
 On each run, `AQAstatus` and `TCKstatus` are also derived from the triage issues in
-[`aqaRepo`](config.properties) (default `adoptium/aqa-tests`), found by searching for issues titled
-`Triage Automated Tests for <Month> <Year> ...`. `<Month> <Year>` is taken from the start of the release
+[`aqaRepo`](config.properties) (default `adoptium/aqa-tests`), found by listing the repository's issues updated since the start of the month before the
+cycle and keeping those titled `Triage Automated Tests for <Month> <Year> ...`. (The issue list is used rather than search,
+because search can return partial results without an error, which would reset cells.) `<Month> <Year>` is taken from the start of the release
 status issue title. Each CSV row is matched on JDK feature number and platform (from the issue body
 `Version: JDK8` / `Platform: x86-64_mac`, falling back to the title). If several issues match, the newest is used.
 
@@ -55,13 +67,14 @@ status issue title. Each CSV row is matched on JDK feature number and platform (
 
 | Triage issue state                                                                    | Derived value |
 | ------------------------------------------------------------------------------------- | ------------- |
-| closed, or this column's box is ticked                                                | `Completed`   |
+| closed as "not planned"                                                               | `NotPlanned`  |
+| closed any other way, or this column's box is ticked                                  | `Completed`   |
 | otherwise: has comments, was reopened, or the other column's box is ticked            | `InProgress`  |
 | otherwise (open, no comments, nothing ticked)                                         | none: the `status.csv` value is used |
 
 A derived value replaces the `status.csv` value, so a status can go backwards, for example a closed triage issue
 that is reopened drops back from `Completed` to `InProgress` until its checklist is done and it is closed again.
-`NotPlanned` is never overridden. `status.csv` itself is not rewritten, so the derived values only appear in the
+A `NotPlanned` in `status.csv` is never overridden. `status.csv` itself is not rewritten, so the derived values only appear in the
 issue tables, and `status.csv` remains the source for the columns that are not derived.
 
 ## Release tags
@@ -70,7 +83,11 @@ The tags of the cycle come from [`releasePlan.cfg`](https://github.com/adoptium/
 in mirror-scripts (`releasePlanUrl` in `config.properties`), e.g. `jdk21uGA="jdk-21.0.13.1-ga"`. For each JDK
 version in the plan, `Version` is set to the full release name known to the Adoptium API (`jdk-21.0.13.1+2`,
 `jdk8u514-b01`); until the API knows it, to the plan tag without a build number (`jdk-21.0.13.1`) and the derivations
-below that need a release name are skipped. If the plan or the API cannot be read, the `Version` in `status.csv` is used.
+below that need a release name are skipped. If the plan or the API cannot be read, the heading and the published, installer and image cells already shown in the issue
+are kept for the affected versions.
+
+Only the JDK version token of a `### JDK...` heading is replaced; text after it is kept
+(`### JDK21 - Linux delayed` becomes `### jdk-21.0.13.1+2 - Linux delayed`), and other headings are left alone.
 
 ## Derived publish status
 
@@ -80,16 +97,17 @@ row's architecture and OS (`x64`/`mac`, `aarch64`/`alpine-linux`, ...; `arm32` a
 
 - A 404 means the tag is not published yet, so rows keep their `status.csv` value.
 - Publishing is not allowed before testing completes, so `publishStatus` is only set when `AQAstatus` and `TCKstatus`
-  (after the triage derivation above) are both `Completed`. If a platform is published earlier, the run logs a warning
-  and the table is not changed for that row.
+  (after the triage derivation above) are both `Completed`. If platforms are published earlier, the run logs one warning
+  listing them and the table is not changed for those rows.
 - Rows without a resolved release name (a placeholder or a plan tag without a build number) are not looked up.
 - `NotPlanned` is never overridden. The derived value only ever sets `Completed`, so a value already in `status.csv` stays.
-- If the API call fails (HTTP error or network), that version's rows are unchanged and a warning is logged.
+- If the API call fails (HTTP error or network), the cells already shown in the issue are kept for that version and a warning is logged.
 
 ## Derived installer and image status
 
 `installerStatus` and `imagesStatus` are only derived for rows whose `publishStatus` is `Completed`, only ever set
-`Completed`, never override `NotPlanned`, and leave the value alone when a lookup fails (a warning is logged).
+`Completed`, never override `NotPlanned`, and keep the cell already shown in the issue when a lookup fails (a warning is logged). A 404 or a missing
+image or package is not a failure: the cell shows the `status.csv` value.
 
 | Column | Platform | `Completed` when |
 | ------ | -------- | ---------------- |
@@ -110,3 +128,7 @@ An invalid status value fails the workflow run and leaves the issue unchanged.
 
 Note: the scheduled run only fires from the default branch, and GitHub may delay or skip
 `*/10` schedules under load.
+
+## Tests
+
+`node --test .github/release-status/update-status.test.js` runs [`update-status.test.js`](update-status.test.js) (Node 18 or later, no dependencies).
