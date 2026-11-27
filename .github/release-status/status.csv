@@ -1,0 +1,65 @@
+Version,Platform,AQAstatus,TCKstatus,publishStatus,installerStatus,imagesStatus,Notes
+jdk8uXXX-bXX,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk8uXXX-bXX,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk8uXXX-bXX,x64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk8uXXX-bXX,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk8uXXX-bXX,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk8uXXX-bXX,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk8uXXX-bXX,arm32_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk8uXXX-bXX,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-11.0.XX+Y,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-11.0.XX+Y,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-11.0.XX+Y,x64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-11.0.XX+Y,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-11.0.XX+Y,aarch64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-11.0.XX+Y,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-11.0.XX+Y,s390x_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-11.0.XX+Y,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk-11.0.XX+Y,arm32_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-11.0.XX+Y,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-17.0.XX+Y,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-17.0.XX+Y,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-17.0.XX+Y,x64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-17.0.XX+Y,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-17.0.XX+Y,aarch64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-17.0.XX+Y,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-17.0.XX+Y,s390x_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-17.0.XX+Y,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk-17.0.XX+Y,arm32_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-17.0.XX+Y,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-17.0.XX+Y,riscv64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-21.0.X+Y,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-21.0.X+Y,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-21.0.X+Y,x64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-21.0.X+Y,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-21.0.X+Y,aarch64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-21.0.X+Y,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-21.0.X+Y,s390x_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-21.0.X+Y,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk-21.0.X+Y,aarch64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-21.0.X+Y,aarch64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-21.0.X+Y,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-21.0.X+Y,riscv64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-25.0.X+Y,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-25.0.X+Y,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-25.0.X+Y,x64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-25.0.X+Y,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-25.0.X+Y,aarch64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-25.0.X+Y,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-25.0.X+Y,s390x_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-25.0.X+Y,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk-25.0.X+Y,aarch64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-25.0.X+Y,aarch64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-25.0.X+Y,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-25.0.X+Y,riscv64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-27.0.X+Y,x64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-27.0.X+Y,x64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-27.0.X+Y,aarch64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-27.0.X+Y,aarch64_mac,NotStarted,NotStarted,NotStarted,NotStarted,NotPlanned,
+jdk-27.0.X+Y,ppcle64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-27.0.X+Y,s390x_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-27.0.X+Y,ppc64_aix,NotStarted,NotStarted,NotStarted,NotPlanned,NotPlanned,This will be a headless build
+jdk-27.0.X+Y,aarch64_windows,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,
+jdk-27.0.X+Y,aarch64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-27.0.X+Y,x64_alpine-linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build
+jdk-27.0.X+Y,riscv64_linux,NotStarted,NotStarted,NotStarted,NotStarted,NotStarted,This will be a headless build

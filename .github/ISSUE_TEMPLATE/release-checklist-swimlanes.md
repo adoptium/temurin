@@ -62,6 +62,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 - [ ] 👤 **Name Release Leads:** Confirm **Release Champion** and **Compliance Release Lead (CRL)** and update the Release Information section of this checklist.
 - [ ] 👤 **Identify Release Versions:** Confirm expected GA versions from [java.com/releases](https://www.java.com/releases/).
 - [ ] ⚙️ **Create Tracking Issues:** Run the [Create Release Tracking Issues](https://github.com/adoptium/temurin/actions/workflows/create-release-tracking-issues.yml) workflow to generate a `Release Status Issue`, `Public Retrospective Issue`, and `Compliance Release Checklist` in `adoptium/temurin`.
+- [ ] 👤 **Enable Status Table Updates:** Open a PR that sets `issue=<Release Status Issue number>` in [`.github/release-status/config.properties`](https://github.com/adoptium/temurin/blob/main/.github/release-status/config.properties) so that the [Update Release Status Tables](https://github.com/adoptium/temurin/actions/workflows/update-release-status.yml) workflow keeps the status tables up to date (it only runs from `main`, so the PR must be merged). If this release will not ship something, also set those cells to `NotPlanned` in `status.csv` (see the [README](https://github.com/adoptium/temurin/blob/main/.github/release-status/README.md)).
 - [ ] 👤 **Update Slack:** Post bookmark links to tracking issues in the `#release` channel.
 - [ ] 👤 **Branching Notification:** Post [branching announcement](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#branching-message-for-build-related-repositories) to `#build` and `#release`.
 
@@ -116,7 +117,7 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 
 ### 📢 Communications
 - [ ] 🤖 **Website Release Banner:** Verify release banner is live on adoptium.net; manually publish if automation did not trigger it.
-- [ ] 👤 **Track Progress:** Regularly update the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME).
+- [ ] 👤 **Track Progress:** Check the [Release Status Issue](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME). AQA, TCK, published, installer and image statuses are updated automatically every 10 minutes (manual edits to the tables are overwritten); update the remaining content by hand.
 - [ ] ⚙️ **Generate & Publish Release Notes:**
   - [ ] Run [create_release_notes](https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/) per JDK version.
   - [ ] Publish via the convenience link from the create_release_notes job that pre-populates the correct parameters in the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/).
@@ -132,5 +133,6 @@ Activities are categorized by the **5 release swimlanes** and tagged with automa
 - [ ] 🤖 **Run SBOM & Validation Job:** Execute [download_and_sbom_validation](https://ci.adoptium.net/job/build-scripts/job/release/job/download_and_sbom_validation) to verify downloads, signatures, and SBOM metadata.
 - [ ] 👤 **Archive Test Evidence:**
   - [ ] Archive and publish all AQA test results.
+- [ ] 👤 **Disable Status Table Updates:** Open a PR that clears `issue=` in [`.github/release-status/config.properties`](https://github.com/adoptium/temurin/blob/main/.github/release-status/config.properties), revert any per-release `NotPlanned` changes to `status.csv`, then close the Release Status Issue.
 - [ ] 👤 **Prep Next Cycle:**
   - [ ] Open a GitHub issue in `adoptium.net` for next cycle's blog post / vulnerability advisory tracking.
